@@ -1,0 +1,9 @@
+WARNING - 01:36:06: First conversion pass
+ERROR - The operation was not stored in the content of an Enumeration : Couleur
+ERROR - The operation was not stored in the content of an Enumeration : Direction
+ERROR - The operation was not stored in the content of an Enumeration : Direction
+ERROR - The operation was not stored in the content of an Enumeration : Direction
+ERROR - The operation was not stored in the content of an Enumeration : Direction
+WARNING - 01:36:07: Second pass : generating package usages
+WARNING - 01:36:07: Saving uml file /resource/Othello/src/fr/aezi/othello/modele/modele.uml
+WARNING - 01:36:07: Uml file /resource/Othello/src/fr/aezi/othello/modele/modele.uml saved

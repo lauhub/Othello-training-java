@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_w-dMcIubEeyLKLCfYH3bjA" name="modele">
+  <elementImport xmi:id="_w_6lAIubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lAYubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lAoubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lA4ubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lBIubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lBYubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lBoubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lB4ubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+  </elementImport>
+  <elementImport xmi:id="_w_6lCIubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_w_7MEIubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="_w_7MEYubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_w_7MEoubEeyLKLCfYH3bjA">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <packageImport xmi:id="_w_26oIubEeyLKLCfYH3bjA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:id="_w_4IwIubEeyLKLCfYH3bjA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_w_7ME4ubEeyLKLCfYH3bjA" name="fr">
+    <packagedElement xmi:type="uml:Package" xmi:id="_w_7MFIubEeyLKLCfYH3bjA" name="aezi">
+      <packagedElement xmi:type="uml:Package" xmi:id="_w_7MFYubEeyLKLCfYH3bjA" name="othello">
+        <packagedElement xmi:type="uml:Package" xmi:id="_w_7MFoubEeyLKLCfYH3bjA" name="modele">
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_w_-PYIubEeyLKLCfYH3bjA" name="Couleur" visibility="public">
+            <ownedOperation xmi:id="_xAvrcIubEeyLKLCfYH3bjA" name="getCouleur" visibility="public" isStatic="true">
+              <ownedParameter xmi:id="_xAvrcYubEeyLKLCfYH3bjA" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_xAvrcoubEeyLKLCfYH3bjA" type="_w_-PYIubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedLiteral xmi:id="_xAcwgIubEeyLKLCfYH3bjA" name="NOIR">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xAcwgYubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xAdXkIubEeyLKLCfYH3bjA" name="BLANC">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xAdXkYubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_xAGyQIubEeyLKLCfYH3bjA" name="Jeu" visibility="public">
+            <elementImport xmi:id="_xA3AMYubEeyLKLCfYH3bjA" importedElement="_xA3AMIubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xA3nQYubEeyLKLCfYH3bjA" importedElement="_xA3nQIubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xA4OU4ubEeyLKLCfYH3bjA" importedElement="_xA4OUoubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xA41YYubEeyLKLCfYH3bjA" importedElement="_xA41YIubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xA41Y4ubEeyLKLCfYH3bjA" importedElement="_xA41YoubEeyLKLCfYH3bjA" visibility="private"/>
+            <ownedAttribute xmi:id="_xA9G0IubEeyLKLCfYH3bjA" name="damier" visibility="private" type="_xAOuEIubEeyLKLCfYH3bjA" association="_xGa1oIubEeyLKLCfYH3bjA"/>
+            <ownedAttribute xmi:id="_xBBYQIubEeyLKLCfYH3bjA" name="mesPions" visibility="private" type="_xAIncIubEeyLKLCfYH3bjA" association="_xGa1ooubEeyLKLCfYH3bjA">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xBB_UIubEeyLKLCfYH3bjA" value="*"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_xBDNcIubEeyLKLCfYH3bjA" name="" type="_xAIncIubEeyLKLCfYH3bjA" value="64"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xBOMkIubEeyLKLCfYH3bjA" name="casesOccupees" visibility="private" type="_xAM44IubEeyLKLCfYH3bjA" isUnique="false" association="_xGbcsIubEeyLKLCfYH3bjA">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xBOzoIubEeyLKLCfYH3bjA" value="*"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_xBOMkYubEeyLKLCfYH3bjA" name="" type="_xAM44IubEeyLKLCfYH3bjA" value="new TreeSet&lt;>()"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_xBddIIubEeyLKLCfYH3bjA" name="Jeu" visibility="public">
+              <ownedParameter xmi:id="_xBddIYubEeyLKLCfYH3bjA" name="damier" type="_xAOuEIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xBzbYIubEeyLKLCfYH3bjA" name="ajouterPion" visibility="private">
+              <ownedParameter xmi:id="_xBzbYYubEeyLKLCfYH3bjA" name="c" type="_xAM44IubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xBzbYoubEeyLKLCfYH3bjA" name="couleur" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xCFIMIubEeyLKLCfYH3bjA" name="ajouterPion" visibility="private">
+              <ownedParameter xmi:id="_xCFIMYubEeyLKLCfYH3bjA" name="coord">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_xCFIMoubEeyLKLCfYH3bjA" name="couleur" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xCeJwIubEeyLKLCfYH3bjA" name="retournementsPossibles" visibility="private">
+              <ownedParameter xmi:id="_xCeJwYubEeyLKLCfYH3bjA" name="c" type="_xAM44IubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xCeJwoubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xCeJw4ubEeyLKLCfYH3bjA" name="coulCherchee" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xCeJxIubEeyLKLCfYH3bjA" type="_xA41YoubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xCtaUIubEeyLKLCfYH3bjA" name="getPion" visibility="private">
+              <ownedParameter xmi:id="_xCtaUYubEeyLKLCfYH3bjA" name="c" type="_xAM44IubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xCtaUoubEeyLKLCfYH3bjA" type="_xAIncIubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xDCxgIubEeyLKLCfYH3bjA" name="jouer" visibility="public">
+              <ownedParameter xmi:id="_xDCxgYubEeyLKLCfYH3bjA" name="c" type="_xAM44IubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xDCxgoubEeyLKLCfYH3bjA" name="couleur" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xDYIsIubEeyLKLCfYH3bjA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_xDYIsYubEeyLKLCfYH3bjA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_xDYIsoubEeyLKLCfYH3bjA" key="documentation" value=" Returns a string representation of the object.&#xA; @apiNote&#xA; In general, the&#xA; {@code toString} method returns a string that&#xA; &quot;textually represents&quot; this object. The result should&#xA; be a concise but informative representation that is easy for a&#xA; person to read.&#xA; It is recommended that all subclasses override this method.&#xA; The string output is not necessarily stable over time or across&#xA; JVM invocations.&#xA; @implSpec&#xA; The {@code toString} method for class {@code Object}&#xA; returns a string consisting of the name of the class of which the&#xA; object is an instance, the at-sign character `{@code @}', and&#xA; the unsigned hexadecimal representation of the hash code of the&#xA; object. In other words, this method returns a string equal to the&#xA; value of:&#xA; &lt;blockquote>&#xA; &lt;pre>&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xA; &lt;/pre>&lt;/blockquote>&#xA; @return  a string representation of the object.&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_xDYIs4ubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_xAIncIubEeyLKLCfYH3bjA" name="Pion" visibility="public">
+            <elementImport xmi:id="_xDdoQIubEeyLKLCfYH3bjA" importedElement="_xA3nQIubEeyLKLCfYH3bjA" visibility="private"/>
+            <ownedAttribute xmi:id="_xDfdcIubEeyLKLCfYH3bjA" name="couleur" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+            <ownedOperation xmi:id="_xDh5sIubEeyLKLCfYH3bjA" name="Pion" visibility="public"/>
+            <ownedOperation xmi:id="_xDqckIubEeyLKLCfYH3bjA" name="Pion" visibility="public">
+              <ownedParameter xmi:id="_xDqckYubEeyLKLCfYH3bjA" name="c" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xD0NkIubEeyLKLCfYH3bjA" name="setCouleur" visibility="public">
+              <ownedParameter xmi:id="_xD0NkYubEeyLKLCfYH3bjA" name="c" type="_w_-PYIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xD5tIIubEeyLKLCfYH3bjA" name="setCouleur" visibility="public">
+              <ownedParameter xmi:id="_xD5tIYubEeyLKLCfYH3bjA" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xD_zwIubEeyLKLCfYH3bjA" name="getCouleur" visibility="public">
+              <ownedParameter xmi:id="_xD_zwYubEeyLKLCfYH3bjA" type="_w_-PYIubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xEEFMIubEeyLKLCfYH3bjA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_xEEFMYubEeyLKLCfYH3bjA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_xEEFMoubEeyLKLCfYH3bjA" key="documentation" value=" Returns a string representation of the object.&#xA; @apiNote&#xA; In general, the&#xA; {@code toString} method returns a string that&#xA; &quot;textually represents&quot; this object. The result should&#xA; be a concise but informative representation that is easy for a&#xA; person to read.&#xA; It is recommended that all subclasses override this method.&#xA; The string output is not necessarily stable over time or across&#xA; JVM invocations.&#xA; @implSpec&#xA; The {@code toString} method for class {@code Object}&#xA; returns a string consisting of the name of the class of which the&#xA; object is an instance, the at-sign character `{@code @}', and&#xA; the unsigned hexadecimal representation of the hash code of the&#xA; object. In other words, this method returns a string equal to the&#xA; value of:&#xA; &lt;blockquote>&#xA; &lt;pre>&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xA; &lt;/pre>&lt;/blockquote>&#xA; @return  a string representation of the object.&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_xEEFM4ubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_xAM44IubEeyLKLCfYH3bjA" name="Case" visibility="public">
+            <elementImport xmi:id="_xEIWoYubEeyLKLCfYH3bjA" importedElement="_xEIWoIubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xEIWo4ubEeyLKLCfYH3bjA" importedElement="_xEIWooubEeyLKLCfYH3bjA" visibility="private"/>
+            <ownedAttribute xmi:id="_xEI9sIubEeyLKLCfYH3bjA" name="emplacement" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xEI9sYubEeyLKLCfYH3bjA" name="index" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xEJkwIubEeyLKLCfYH3bjA" name="lig" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xEKL0IubEeyLKLCfYH3bjA" name="col" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xEMBAIubEeyLKLCfYH3bjA" name="voisinsParDir" type="_xEIWooubEeyLKLCfYH3bjA">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_xEMBAYubEeyLKLCfYH3bjA" name="" type="_xEIWooubEeyLKLCfYH3bjA" value="new HashMap&lt;>()"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_xESHoIubEeyLKLCfYH3bjA" name="Case">
+              <ownedParameter xmi:id="_xESHoYubEeyLKLCfYH3bjA" name="emplacement">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_xESHooubEeyLKLCfYH3bjA" name="index">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_xESHo4ubEeyLKLCfYH3bjA" name="lig">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_xESHpIubEeyLKLCfYH3bjA" name="col">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xEY1UIubEeyLKLCfYH3bjA" name="getIndex" visibility="public">
+              <ownedParameter xmi:id="_xEY1UYubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xEeU4IubEeyLKLCfYH3bjA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_xEeU4YubEeyLKLCfYH3bjA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_xEeU4oubEeyLKLCfYH3bjA" key="documentation" value=" Returns a string representation of the object.&#xA; @apiNote&#xA; In general, the&#xA; {@code toString} method returns a string that&#xA; &quot;textually represents&quot; this object. The result should&#xA; be a concise but informative representation that is easy for a&#xA; person to read.&#xA; It is recommended that all subclasses override this method.&#xA; The string output is not necessarily stable over time or across&#xA; JVM invocations.&#xA; @implSpec&#xA; The {@code toString} method for class {@code Object}&#xA; returns a string consisting of the name of the class of which the&#xA; object is an instance, the at-sign character `{@code @}', and&#xA; the unsigned hexadecimal representation of the hash code of the&#xA; object. In other words, this method returns a string equal to the&#xA; value of:&#xA; &lt;blockquote>&#xA; &lt;pre>&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xA; &lt;/pre>&lt;/blockquote>&#xA; @return  a string representation of the object.&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_xEeU44ubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xEs-YIubEeyLKLCfYH3bjA" name="setVoisin" visibility="public">
+              <ownedParameter xmi:id="_xEs-YYubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xEs-YoubEeyLKLCfYH3bjA" name="v" type="_xAM44IubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xE2vYIubEeyLKLCfYH3bjA" name="getVoisin" visibility="public">
+              <ownedParameter xmi:id="_xE2vYYubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xE2vYoubEeyLKLCfYH3bjA" type="_xAM44IubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xE9dEoubEeyLKLCfYH3bjA" name="getDirVoisins" visibility="public">
+              <ownedParameter xmi:id="_xE9dE4ubEeyLKLCfYH3bjA" type="_xE9dEYubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xFFY4IubEeyLKLCfYH3bjA" name="hasNext" visibility="public">
+              <ownedParameter xmi:id="_xFFY4YubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xFFY4oubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xFPw8IubEeyLKLCfYH3bjA" name="getNext" visibility="public">
+              <ownedParameter xmi:id="_xFPw8YubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xFPw8oubEeyLKLCfYH3bjA" type="_xAM44IubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xFUpcIubEeyLKLCfYH3bjA" name="reprCaseEtVoisinage" visibility="public">
+              <ownedParameter xmi:id="_xFUpcYubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xFiE0IubEeyLKLCfYH3bjA" name="ajouteDirEtVoisin" visibility="private">
+              <ownedParameter xmi:id="_xFiE0YubEeyLKLCfYH3bjA" name="sb" type="_xFY64IubEeyLKLCfYH3bjA"/>
+              <ownedParameter xmi:id="_xFiE0oubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xFoygIubEeyLKLCfYH3bjA" name="reprCaseEtEnvironnement" visibility="public">
+              <ownedParameter xmi:id="_xFoygYubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_xAOuEIubEeyLKLCfYH3bjA" name="Damier" visibility="public">
+            <elementImport xmi:id="_xFsc4YubEeyLKLCfYH3bjA" importedElement="_xFsc4IubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xFsc4oubEeyLKLCfYH3bjA" importedElement="_xEIWoIubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xFtD8YubEeyLKLCfYH3bjA" importedElement="_xFtD8IubEeyLKLCfYH3bjA" visibility="private"/>
+            <elementImport xmi:id="_xFtD8oubEeyLKLCfYH3bjA" importedElement="_xEIWooubEeyLKLCfYH3bjA" visibility="private"/>
+            <ownedAttribute xmi:id="_xFvgMIubEeyLKLCfYH3bjA" name="casesParCoord" visibility="private" type="_xEIWooubEeyLKLCfYH3bjA">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_xFvgMYubEeyLKLCfYH3bjA" name="" type="_xEIWooubEeyLKLCfYH3bjA" value="new HashMap&lt;>()"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xFzKkIubEeyLKLCfYH3bjA" name="listeDeCasesParIndex" visibility="private" type="_xAM44IubEeyLKLCfYH3bjA" isOrdered="true" isUnique="false" association="_xGbcsoubEeyLKLCfYH3bjA">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xFzKkoubEeyLKLCfYH3bjA" value="*"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_xFzKkYubEeyLKLCfYH3bjA" name="" type="_xAM44IubEeyLKLCfYH3bjA" value="new ArrayList&lt;>()"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_xFzxoIubEeyLKLCfYH3bjA" name="lettreLignes" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_xFzxoYubEeyLKLCfYH3bjA" value="*"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_xFzxooubEeyLKLCfYH3bjA" name="" value="9">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </defaultValue>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_xF208IubEeyLKLCfYH3bjA" name="Damier" visibility="public"/>
+            <ownedOperation xmi:id="_xF7GYIubEeyLKLCfYH3bjA" name="getCoord" visibility="public">
+              <eAnnotations xmi:id="_xF7GYYubEeyLKLCfYH3bjA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_xF7GYoubEeyLKLCfYH3bjA" key="documentation" value=" Récupère la case à la coordonnée donnée sous forme de String (ex: &quot;B5&quot;)&#xA; @param coord une coordonnée &#xA; @return une case&#xA;&#x9;"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_xF7GY4ubEeyLKLCfYH3bjA" name="coord">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_xF7GZIubEeyLKLCfYH3bjA" type="_xAM44IubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xF9ioIubEeyLKLCfYH3bjA" name="toString" visibility="public">
+              <eAnnotations xmi:id="_xF9ioYubEeyLKLCfYH3bjA" source="http://www.eclipse.org/umlgen/reverse/java/doc">
+                <details xmi:id="_xF9iooubEeyLKLCfYH3bjA" key="documentation" value=" Returns a string representation of the object.&#xA; @apiNote&#xA; In general, the&#xA; {@code toString} method returns a string that&#xA; &quot;textually represents&quot; this object. The result should&#xA; be a concise but informative representation that is easy for a&#xA; person to read.&#xA; It is recommended that all subclasses override this method.&#xA; The string output is not necessarily stable over time or across&#xA; JVM invocations.&#xA; @implSpec&#xA; The {@code toString} method for class {@code Object}&#xA; returns a string consisting of the name of the class of which the&#xA; object is an instance, the at-sign character `{@code @}', and&#xA; the unsigned hexadecimal representation of the hash code of the&#xA; object. In other words, this method returns a string equal to the&#xA; value of:&#xA; &lt;blockquote>&#xA; &lt;pre>&#xA; getClass().getName() + '@' + Integer.toHexString(hashCode())&#xA; &lt;/pre>&lt;/blockquote>&#xA; @return  a string representation of the object.&#xA; "/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_xF9io4ubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xGB0EIubEeyLKLCfYH3bjA" name="reprCasesEtVoisinages" visibility="public">
+              <ownedParameter xmi:id="_xGB0EYubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xGGFgIubEeyLKLCfYH3bjA" name="reprCasesEtEnvironnement" visibility="public">
+              <ownedParameter xmi:id="_xGGFgYubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_xARKUIubEeyLKLCfYH3bjA" name="Direction" visibility="public">
+            <ownedAttribute xmi:id="_xGJv5YubEeyLKLCfYH3bjA" name="representation" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_xGNaQIubEeyLKLCfYH3bjA" name="Direction">
+              <ownedParameter xmi:id="_xGNaQYubEeyLKLCfYH3bjA" name="representation">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xGUH8IubEeyLKLCfYH3bjA" name="setOppose" visibility="private">
+              <ownedParameter xmi:id="_xGUH8YubEeyLKLCfYH3bjA" name="d" type="_xARKUIubEeyLKLCfYH3bjA"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xGXyUIubEeyLKLCfYH3bjA" name="getOppose" visibility="public">
+              <ownedParameter xmi:id="_xGXyUYubEeyLKLCfYH3bjA" type="_xARKUIubEeyLKLCfYH3bjA" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_xGaOkIubEeyLKLCfYH3bjA" name="getRepresentation" visibility="public">
+              <ownedParameter xmi:id="_xGaOkYubEeyLKLCfYH3bjA" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedLiteral xmi:id="_xGIhwIubEeyLKLCfYH3bjA" name="NO">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJI0IubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJI0YubEeyLKLCfYH3bjA" name="N">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJI0oubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJI04ubEeyLKLCfYH3bjA" name="NE">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJI1IubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJI1YubEeyLKLCfYH3bjA" name="E">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJI1oubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJI14ubEeyLKLCfYH3bjA" name="SE">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJI2IubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJI2YubEeyLKLCfYH3bjA" name="S">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJv4IubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJv4YubEeyLKLCfYH3bjA" name="SO">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJv4oubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGJv44ubEeyLKLCfYH3bjA" name="O">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGJv5IubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGKW8IubEeyLKLCfYH3bjA" name="oppose">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGKW8YubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_xGKW8oubEeyLKLCfYH3bjA" name="ordreLecture">
+              <specification xmi:type="uml:LiteralInteger" xmi:id="_xGKW84ubEeyLKLCfYH3bjA"/>
+            </ownedLiteral>
+          </packagedElement>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_xA3AMIubEeyLKLCfYH3bjA" name="BLANC"/>
+          <packagedElement xmi:type="uml:DataType" xmi:id="_xA3nQIubEeyLKLCfYH3bjA" name="NOIR"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_xGa1oIubEeyLKLCfYH3bjA" name="damier_target" memberEnd="_xA9G0IubEeyLKLCfYH3bjA _xGa1oYubEeyLKLCfYH3bjA">
+            <ownedEnd xmi:id="_xGa1oYubEeyLKLCfYH3bjA" name="target" type="_xAGyQIubEeyLKLCfYH3bjA" association="_xGa1oIubEeyLKLCfYH3bjA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_xGa1ooubEeyLKLCfYH3bjA" name="mesPions_target" memberEnd="_xBBYQIubEeyLKLCfYH3bjA _xGa1o4ubEeyLKLCfYH3bjA">
+            <ownedEnd xmi:id="_xGa1o4ubEeyLKLCfYH3bjA" name="target" type="_xAGyQIubEeyLKLCfYH3bjA" association="_xGa1ooubEeyLKLCfYH3bjA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_xGbcsIubEeyLKLCfYH3bjA" name="casesOccupees_target" memberEnd="_xBOMkIubEeyLKLCfYH3bjA _xGbcsYubEeyLKLCfYH3bjA">
+            <ownedEnd xmi:id="_xGbcsYubEeyLKLCfYH3bjA" name="target" type="_xAGyQIubEeyLKLCfYH3bjA" association="_xGbcsIubEeyLKLCfYH3bjA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_xGbcsoubEeyLKLCfYH3bjA" name="listeDeCasesParIndex_target" memberEnd="_xFzKkIubEeyLKLCfYH3bjA _xGbcs4ubEeyLKLCfYH3bjA">
+            <ownedEnd xmi:id="_xGbcs4ubEeyLKLCfYH3bjA" name="target" type="_xAOuEIubEeyLKLCfYH3bjA" association="_xGbcsoubEeyLKLCfYH3bjA"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_xGdR4IubEeyLKLCfYH3bjA" name="modele_modele" client="_w_7MFoubEeyLKLCfYH3bjA" supplier="_w_7MFoubEeyLKLCfYH3bjA"/>
+          <packagedElement xmi:type="uml:Usage" xmi:id="_xGdR4YubEeyLKLCfYH3bjA" name="modele_util" client="_w_7MFoubEeyLKLCfYH3bjA" supplier="_xA4OUYubEeyLKLCfYH3bjA"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_xA4OUIubEeyLKLCfYH3bjA" name="java">
+    <packagedElement xmi:type="uml:Package" xmi:id="_xA4OUYubEeyLKLCfYH3bjA" name="util">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xA4OUoubEeyLKLCfYH3bjA" name="Collection"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xA41YIubEeyLKLCfYH3bjA" name="TreeSet"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xA41YoubEeyLKLCfYH3bjA" name="Set"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xEIWoIubEeyLKLCfYH3bjA" name="HashMap"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xEIWooubEeyLKLCfYH3bjA" name="Map"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xFsc4IubEeyLKLCfYH3bjA" name="ArrayList"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xFtD8IubEeyLKLCfYH3bjA" name="List"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_xE9dEIubEeyLKLCfYH3bjA" name="lang">
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xE9dEYubEeyLKLCfYH3bjA" name="Iterable"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_xFY64IubEeyLKLCfYH3bjA" name="StringBuffer"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>
