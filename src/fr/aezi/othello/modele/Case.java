@@ -3,7 +3,7 @@ package fr.aezi.othello.modele;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Case {
+public class Case implements Comparable<Case>{
 	private String emplacement ;
 	private int index;
 	private int lig, col;
@@ -84,5 +84,22 @@ public class Case {
 		}
 		sb.append("]");
 		return sb.toString();		
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) { return true; }
+		
+		if(o instanceof Case) {
+			return this.index == ((Case)o).index ;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int compareTo(Case o) {
+		return this.index - o.index ;
 	}
 }
