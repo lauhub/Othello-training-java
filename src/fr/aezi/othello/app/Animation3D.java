@@ -1,5 +1,6 @@
 package fr.aezi.othello.app;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -9,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -63,6 +65,15 @@ public class Animation3D extends Application {
 		
 		stage.setScene(scene);
 		stage.show();
+		
+		PerspectiveCamera camera = new PerspectiveCamera();
+		camera.setTranslateY(00);
+		camera.setTranslateY(500);
+		camera.setTranslateZ(-500);
+		camera.setRotationAxis(Rotate.X_AXIS);
+		camera.setRotate(45);
+		scene.setCamera(camera);
+		
 	}
 	
 	private Node creerPion(double x, double y, boolean white) {
@@ -92,7 +103,7 @@ public class Animation3D extends Application {
 		assemblage.setTranslateX(x+100);
 		assemblage.setTranslateY(y);
 		faceBlanche.setTranslateZ(4);
-		assemblage.setTranslateZ(-35);
+		assemblage.setTranslateZ(-15);
 		if(white) {
 			assemblage.setRotationAxis(new Point3D(1, 1, 0));
 			assemblage.setRotate(180);
@@ -116,15 +127,51 @@ public class Animation3D extends Application {
 		double value = rotateProperty.doubleValue();
 		value = (value + 180) % 360;
 		System.out.println(pion.rotateProperty());
-		Timeline tl = new Timeline();
-		tl.setRate(2.0);
 		DoubleProperty translateProp = pion.translateZProperty();
 		System.out.println(translateProp);
 		
+		KeyValue plusTranslate = new KeyValue(pion.translateZProperty(), -50, Interpolator.EASE_OUT);
+		KeyValue minusTranslate = new KeyValue(pion.translateZProperty(), -15, Interpolator.EASE_IN);
+		KeyValue kvAxis = new KeyValue(pion.rotationAxisProperty(), new Point3D(1, 0, 0));
+		Timeline tl = new Timeline();
+		tl.setRate(1.0);
+		tl.getKeyFrames().add(new KeyFrame(Duration.seconds(0.3), plusTranslate));
+
+		KeyValue kvValue = new KeyValue(pion.rotateProperty(), value);
+		Timeline tlTurn = new Timeline();
+		tlTurn.setRate(1.0);
+		tlTurn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), kvValue, kvAxis));
+		Timeline tlFall = new Timeline();
+		tlFall.setRate(4.0);
+		tlFall.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0), minusTranslate));
+
+		tl.play();
+		tlTurn.setDelay(Duration.seconds(0.1));
+		tlTurn.play();
+		tl.setOnFinished((event)->{
+			tlFall.play();
+		});
+	}
+	private void tournerPion0(Node pion) {
+		System.out.println("Accessible Text:"+ pion.getAccessibleText());
+		pion.setRotationAxis(new Point3D(1, 1, 0));
+		DoubleProperty rotateProperty = pion.rotateProperty();
+		double value = rotateProperty.doubleValue();
+		value = (value + 180) % 360;
+		System.out.println(pion.rotateProperty());
+		DoubleProperty translateProp = pion.translateZProperty();
+		System.out.println(translateProp);
+		
+		KeyValue plusTranslate = new KeyValue(pion.translateZProperty(), -100, Interpolator.EASE_OUT);
+		KeyValue minusTranslate = new KeyValue(pion.translateZProperty(), -15, Interpolator.EASE_IN);
 		KeyValue kvAxis = new KeyValue(pion.rotationAxisProperty(), new Point3D(1, 0, 0));
 		KeyValue kvValue = new KeyValue(pion.rotateProperty(), value);
 		//KeyValue kvMove = new KeyValue(pion.translateZProperty(), - translateProp.doubleValue());
-		tl.getKeyFrames().add(new KeyFrame(Duration.seconds(1), kvValue, kvAxis));
+		Timeline tl = new Timeline();
+		tl.setRate(1.0);
+		tl.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), plusTranslate));
+		tl.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0), kvValue, kvAxis));
+		tl.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0), minusTranslate));
 		//tl.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new KeyValue(pion.rotationAxisProperty(), new Point3D(1, 1, 0)), new KeyValue(pion.rotateProperty(), value) ));
 		tl.play();
 		tl.setOnFinished((event)->{
