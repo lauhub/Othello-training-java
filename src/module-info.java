@@ -1,5 +1,5 @@
 module fr.aezi.othello {
 	requires javafx.graphics;
 	
-	opens fr.aezi.othello;
+	opens fr.aezi.othello.app;
 }
