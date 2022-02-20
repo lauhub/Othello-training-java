@@ -29,25 +29,20 @@ public class Jeu {
 	}
 	
 	public void ajouterPion(Case c, Couleur couleur) {
-		Set<Case> casesARetourner = jouer(c, couleur);
-		
 		mesPions[c.getIndex()] = new Pion(couleur);
 		casesOccupees.add(c);
 		
-		Map<String, Object> properties = new HashMap<>();
-		properties.put(GameEvent.DISCS_TO_TURN, casesARetourner);
-		GameEvent e = new GameEvent(c, properties);
-		
-		dispatchEvent(e);
 	}
 	
-	private Set<Case> jouer(Case c, Couleur couleur) {
+	public void jouer(Case c, Couleur couleur) {
 		// La case est-elle jouable ?
 		// sinon => exception
 		if(!isCaseJouable(c, couleur)) {
 			throw new IllegalArgumentException("La case "+c.getEmplacement() 
 				+ " n'est pas jouable pour la couleur " + couleur);
 		}
+		
+		ajouterPion(c, couleur);
 		
 		// Oui
 		// Trouver tous les pions présents autour de cette case
@@ -71,7 +66,12 @@ public class Jeu {
 			}
 			*/
 		}
-		return casesARetourner;
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(GameEvent.DISCS_TO_TURN, casesARetourner);
+		properties.put(GameEvent.PLAYED_COLOR, couleur);
+		GameEvent e = new GameEvent(c, properties);
+		
+		dispatchEvent(e);
 	}
 
 	private void ajouterPion(String coord, Couleur couleur) {
@@ -82,8 +82,10 @@ public class Jeu {
 	}
 	public void changerProchainJoueur() {
 		prochainJoueur = Couleur.getOpposant(prochainJoueur);
+		System.out.println("prochainJoueur:"+ prochainJoueur);
 	}
 	
+	public Couleur getProchainJoueur() { return prochainJoueur; }
 	
 	/**
 	 * Crée un Set ou ajouter toutes les les cases à retourner dans la direction
@@ -98,15 +100,18 @@ public class Jeu {
 		Set<Case> casesARetourner = new TreeSet<>();
 		while(c.hasNext(d)) {
 			c = c.getVoisin(d);
-			if(getPion(c).getCouleur() == couleur) {
-				//On a trouvé un pion de la même couleur, on arrête et on sort
-				break;
+			Pion disc = getPion(c);
+			if(disc != null) {
+				if(disc.getCouleur() == couleur) {
+					//On a trouvé un pion de la même couleur, on arrête et on sort
+					break;
+				}
+				else {
+					//On ajoute le pion, puisqu'il est de couleur opposée
+					casesARetourner.add(c);
+				}
 			}
-			else {
-				//On ajoute le pion, puisqu'il est de couleur opposée
-				casesARetourner.add(c);
-			}
-			
+			else { break; }
 		}
 		return casesARetourner;
 	}

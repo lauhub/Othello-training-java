@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
@@ -104,6 +105,41 @@ public class OthelloBoard extends Application {
 	
 	private void gameModified(GameEvent e) {
 		//Game was modified
+		Case playedSquare = (Case)e.getSource();
+		addDisc((Couleur)e.getProperty(GameEvent.PLAYED_COLOR), playedSquare.getEmplacement());
+		
+		Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.DISCS_TO_TURN);
+		double delay = 0.0;
+		for(Case c : discsToTurn) {
+			String coord = c.getEmplacement();
+			if(myDiscs.containsKey(coord)) {
+				myDiscs.get(coord).setDiscToBeTurned(delay);
+				delay += 0.05;
+			}
+			else {
+				throw new IllegalStateException("Cannot turn a disc that is not displayed :" + c.getEmplacement());
+			}
+		}
+		// Et une fois cela fait, on met à jour les cases jouables
+		for (String coord : mySquares.keySet()) {
+			System.out.println(coord);
+			mySquares.get(coord).setVisible(false);
+		}
+		for(Case squareModel: jeu.getCasesJouables()) {
+			mySquares.get(squareModel.getEmplacement()).setVisible(true);
+		}
+		
+		/*
+		 * TODO: montrer comment éviter cette redondance de code... (visiteur ?)
+		 */
+		for(Case c : discsToTurn) {
+			String coord = c.getEmplacement();
+			if(myDiscs.containsKey(coord)) {
+				myDiscs.get(coord).runItNow();
+			}
+		}
+
+		
 	}
 	
 	private void squareClicked(MouseEvent e) {
@@ -113,8 +149,10 @@ public class OthelloBoard extends Application {
 			if(coord == null) {
 				throw new IllegalStateException("Not a known square");
 			}
-			jeu.ajouterPion(coord);
+			Case gameSquare = damier.getCoord(coord);
+			Couleur colorToPlay = jeu.getProchainJoueur();
 			jeu.changerProchainJoueur();
+			jeu.jouer(gameSquare, colorToPlay);
 		}
 		else {
 			System.err.println(e.getSource()+ " is not a Node");
@@ -185,6 +223,5 @@ public class OthelloBoard extends Application {
 				myDiscs.get(coord).runItNow();
 			}
 		}
-		
 	}
 }

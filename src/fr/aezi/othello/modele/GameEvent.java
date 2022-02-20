@@ -5,6 +5,7 @@ import java.util.Map;
 public class GameEvent {
 	
 	public static final String DISCS_TO_TURN = "disc.to.turn";
+	public static final String PLAYED_COLOR = "played.color";
 	
 	private Object source;
 	private Map<String, Object> properties;
