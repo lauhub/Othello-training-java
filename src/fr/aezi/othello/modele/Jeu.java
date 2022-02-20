@@ -252,13 +252,13 @@ public class Jeu {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("  |");
-		for(char col: "12345678".toCharArray()) {
+		for(char col: "ABCDEFGH".toCharArray()) {
 			sb.append(col).append("|");
 		};
-		for(char line : "ABCDEFGH".toCharArray()) {
+		for(char line : "12345678".toCharArray()) {
 			sb.append("\n").append(line).append(" |");
-			for(char col: "12345678".toCharArray()) {
-				Pion p = getPion(damier.getCoord(""+line+col));
+			for(char col: "ABCDEFGH".toCharArray()) {
+				Pion p = getPion(damier.getCoord(""+col+line));
 				if(p != null) {
 					sb.append(p.getCouleur().nomCourt()).append("|");
 					
