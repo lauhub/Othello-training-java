@@ -2,6 +2,7 @@ package fr.aezi.othello.app;
 
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -53,7 +54,7 @@ public class Board3D extends Group{
 		lineBox.setTranslateZ(-0.5);
 		this.getChildren().add(lineBox);
 	}
-	public Box createPlayableBox(double x, double y) {
+	public Node createSquare(double x, double y) {
 		Box box = new Box(boardWidth / 8 - 4, boardHeight / 8 -4 , 2);
 		PhongMaterial material = new PhongMaterial();
 		double colorStrength = 0.2;

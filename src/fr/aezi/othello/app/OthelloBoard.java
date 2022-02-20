@@ -10,13 +10,13 @@ import fr.aezi.othello.modele.Damier;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -29,7 +29,7 @@ public class OthelloBoard extends Application {
 	private Group racine ;
 	private Damier damier = new Damier();
 	private Map<String, Disc> myDiscs = new HashMap<>();
-	private Map<String, Box> myPlaces = new HashMap<>();
+	private Map<String, Node> mySquares = new HashMap<>();
 	private Board3D othellier ;
 	
 	public static void main(String[] args) {
@@ -85,13 +85,13 @@ public class OthelloBoard extends Application {
 		addDisc(Couleur.BLANC, "E5");
 		addDisc(Couleur.NOIR, "E4");
 		addDisc(Couleur.NOIR, "D5");
-		addPlayablePlace("C4");
-		addPlayablePlace("C3");
-		addPlayablePlace("D3");
-		addPlayablePlace("E6");
-		addPlayablePlace("F5");
-		addPlayablePlace("F6");
-		myPlaces.get("F6").setVisible(false);
+		addPlayableSquare("C4");
+		addPlayableSquare("C3");
+		addPlayableSquare("D3");
+		addPlayableSquare("E6");
+		addPlayableSquare("F5");
+		addPlayableSquare("F6");
+		mySquares.get("F6").setVisible(false);
 	}
 	
 	private List<String> putDiscsForTurn() {
@@ -129,11 +129,12 @@ public class OthelloBoard extends Application {
 		myDiscs.put(coord, disc);
 		return disc;
 	}
-	public void addPlayablePlace(String coord) {
-		Point2D place = damier.getCoord(coord, WIDTH, HEIGHT);
-		Box box = othellier.createPlayableBox(place.getX(), place.getY());
+	
+	public void addPlayableSquare(String coord) {
+		Point2D location = damier.getCoord(coord, WIDTH, HEIGHT);
+		Node square = othellier.createSquare(location.getX(), location.getY());
 		
-		myPlaces.put(coord, box);
+		mySquares.put(coord, square);
 	}
 	
 	public void turnDiscs(List<String> coords) {
