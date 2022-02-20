@@ -10,6 +10,7 @@ import java.util.Set;
 public class Jeu {
 	private Damier damier ;
 	private Pion[] mesPions = new Pion[64];
+	private Couleur prochainJoueur = Couleur.NOIR;
 	
 	private Collection<Case> casesOccupees = new TreeSet<>();
 	
@@ -21,12 +22,16 @@ public class Jeu {
 		ajouterPion("D5", NOIR);
 	}
 	
-	private void ajouterPion(Case c, Couleur couleur) {
+	public void ajouterPion(Case c, Couleur couleur) {
 		mesPions[c.getIndex()] = new Pion(couleur);
 		casesOccupees.add(c);
 	}
 	private void ajouterPion(String coord, Couleur couleur) {
 		ajouterPion( damier.getCoord(coord), couleur );
+	}
+	public void ajouterPion(String coord) {
+		ajouterPion(coord, prochainJoueur);
+		//prochainJoueur = 
 	}
 	
 	private Set<Case> retournementsPossibles(Case c, Direction d, Couleur coulCherchee){

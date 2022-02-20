@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javafx.geometry.Point2D;
 
@@ -63,11 +64,15 @@ public class Damier {
 	public Point2D getCoord(Case c, int boardWidth, int boardHeight) {
 		return new Point2D((  2* c.getX() - 1) * boardWidth / 16, ( 2 * c.getY() -1) * boardHeight / 16);
 	}
+	
 	public Point2D getCoord(String coord, int boardWidth, int boardHeight) {
 		Case c = getCoord(coord);
 		return getCoord(c, boardWidth, boardHeight);
 	}
 	
+	public Set<String> getCoordSet(){
+		return casesParCoord.keySet();
+	}
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -83,6 +88,7 @@ public class Damier {
 		
 		return sb.toString();
 	}
+	
 	public String reprCasesEtVoisinages() {
 		StringBuffer sb = new StringBuffer();
 		for(Case c : listeDeCasesParIndex) {
@@ -90,6 +96,7 @@ public class Damier {
 		}
 		return sb.toString();
 	}
+	
 	public String reprCasesEtEnvironnement() {
 		StringBuffer sb = new StringBuffer();
 		for(Case c : listeDeCasesParIndex) {

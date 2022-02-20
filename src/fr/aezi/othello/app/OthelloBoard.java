@@ -7,6 +7,7 @@ import java.util.Map;
 
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
+import fr.aezi.othello.modele.Jeu;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -28,8 +29,10 @@ public class OthelloBoard extends Application {
 	
 	private Group racine ;
 	private Damier damier = new Damier();
+	private Jeu jeu = null;
 	private Map<String, Disc> myDiscs = new HashMap<>();
 	private Map<String, Node> mySquares = new HashMap<>();
+	private Map<Node, String> mapSquaresCoord = new HashMap<>();
 	private Board3D othellier ;
 	
 	public static void main(String[] args) {
@@ -41,6 +44,7 @@ public class OthelloBoard extends Application {
 		initializeBoard(stage);
 		putInitialDiscsOnBoard();
 		putDiscsForTurn();
+		setJeu(new Jeu(damier));
 	}
 	private void initializeBoard(Stage stage) throws Exception {
 		stage.setTitle("Othello - v0");
@@ -78,6 +82,32 @@ public class OthelloBoard extends Application {
 		lightGroup.setTranslateY(-900);
 		//light.setRotate(45);
 		
+		for (String coord : damier.getCoordSet()) {
+			Node square = addPlayableSquare(coord);
+			square.addEventHandler(MouseEvent.MOUSE_CLICKED, this::squareClicked);
+		}
+		
+	}
+	
+	public void setJeu(Jeu jeu) {
+		this.jeu = jeu;
+	}
+	
+	private void squareClicked(MouseEvent e) {
+		if(e.getSource() instanceof Node) {
+			Node square = (Node)e.getSource();
+			String coord = mapSquaresCoord.get(square);
+			if(coord == null) {
+				throw new IllegalStateException("Not a known square");
+			}
+			
+			//We should play here
+			jeu.ajouterPion(coord);
+			
+		}
+		else {
+			System.err.println(e.getSource()+ " is not a Node");
+		}
 	}
 	
 	private void putInitialDiscsOnBoard() {
@@ -85,13 +115,6 @@ public class OthelloBoard extends Application {
 		addDisc(Couleur.BLANC, "E5");
 		addDisc(Couleur.NOIR, "E4");
 		addDisc(Couleur.NOIR, "D5");
-		addPlayableSquare("C4");
-		addPlayableSquare("C3");
-		addPlayableSquare("D3");
-		addPlayableSquare("E6");
-		addPlayableSquare("F5");
-		addPlayableSquare("F6");
-		mySquares.get("F6").setVisible(false);
 	}
 	
 	private List<String> putDiscsForTurn() {
@@ -130,13 +153,19 @@ public class OthelloBoard extends Application {
 		return disc;
 	}
 	
-	public void addPlayableSquare(String coord) {
+	private Node addPlayableSquare(String coord) {
 		Point2D location = damier.getCoord(coord, WIDTH, HEIGHT);
 		Node square = othellier.createSquare(location.getX(), location.getY());
-		
+		square.setVisible(false);
 		mySquares.put(coord, square);
+		return square;
 	}
 	
+
+	/**
+	 * Turns the discs from the given coordinates
+	 * @param coords a list of coordinates
+	 */
 	public void turnDiscs(List<String> coords) {
 		double delay = 0.0;
 		for(String coord : coords) {
