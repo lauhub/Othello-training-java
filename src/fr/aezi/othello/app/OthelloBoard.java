@@ -8,6 +8,7 @@ import java.util.Map;
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
+import fr.aezi.othello.modele.GameEvent;
 import fr.aezi.othello.modele.Jeu;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -33,7 +34,6 @@ public class OthelloBoard extends Application {
 	private Jeu jeu = null;
 	private Map<String, Disc> myDiscs = new HashMap<>();
 	private Map<String, Node> mySquares = new HashMap<>();
-	private Map<Node, String> mapSquaresCoord = new HashMap<>();
 	private Board3D othellier ;
 	
 	public static void main(String[] args) {
@@ -99,12 +99,17 @@ public class OthelloBoard extends Application {
 		for(Case caseJouable: jeu.getCasesJouables()) {
 			mySquares.get(caseJouable.getEmplacement()).setVisible(true);
 		}
+		jeu.addGameListener(this::gameModified);
+	}
+	
+	private void gameModified(GameEvent e) {
+		//Game was modified
 	}
 	
 	private void squareClicked(MouseEvent e) {
 		if(e.getSource() instanceof Node) {
 			Node square = (Node)e.getSource();
-			String coord = mapSquaresCoord.get(square);
+			String coord = square.getAccessibleText();
 			if(coord == null) {
 				throw new IllegalStateException("Not a known square");
 			}
@@ -116,14 +121,7 @@ public class OthelloBoard extends Application {
 		}
 	}
 	
-	private void putInitialDiscsOnBoard() {
-		addDisc(Couleur.BLANC, "D4");
-		addDisc(Couleur.BLANC, "E5");
-		addDisc(Couleur.NOIR, "E4");
-		addDisc(Couleur.NOIR, "D5");
-	}
-	
-	private List<String> putDiscsForTurn() {
+	public List<String> putDiscsForTurn() {
 		List<String> discsToTurn = new ArrayList<>();
 		addDiscToTurn(discsToTurn, Couleur.BLANC, "F6");
 		addDiscToTurn(discsToTurn, Couleur.BLANC, "G7");
@@ -162,6 +160,7 @@ public class OthelloBoard extends Application {
 	private Node addPlayableSquare(String coord) {
 		Point2D location = damier.getCoord(coord, WIDTH, HEIGHT);
 		Node square = othellier.createSquare(location.getX(), location.getY());
+		square.setAccessibleText(coord);
 		square.setVisible(false);
 		mySquares.put(coord, square);
 		return square;

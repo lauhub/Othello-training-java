@@ -45,7 +45,7 @@ public class Case implements Comparable<Case>{
 		return voisinsParDir.keySet();
 	}
 	
-	public boolean hasNext(Direction d) { return false ; }
+	public boolean hasNext(Direction d) { return voisinsParDir.containsKey(d) ; }
 	
 	public String reprCaseEtVoisinage() {
 		StringBuffer sb = new StringBuffer();

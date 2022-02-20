@@ -4,6 +4,10 @@ import static fr.aezi.othello.modele.Couleur.BLANC;
 import static fr.aezi.othello.modele.Couleur.NOIR;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.Set;
 
@@ -14,6 +18,8 @@ public class Jeu {
 	
 	private Collection<Case> casesOccupees = new TreeSet<>();
 	
+	private List<GameListener> listeners = new LinkedList<>();
+	
 	public Jeu(Damier damier) {
 		this.damier = damier;
 		ajouterPion("D4", BLANC);
@@ -23,9 +29,51 @@ public class Jeu {
 	}
 	
 	public void ajouterPion(Case c, Couleur couleur) {
+		Set<Case> casesARetourner = jouer(c, couleur);
+		
 		mesPions[c.getIndex()] = new Pion(couleur);
 		casesOccupees.add(c);
+		
+		Map<String, Object> properties = new HashMap<>();
+		properties.put(GameEvent.DISCS_TO_TURN, casesARetourner);
+		GameEvent e = new GameEvent(c, properties);
+		
+		dispatchEvent(e);
 	}
+	
+	private Set<Case> jouer(Case c, Couleur couleur) {
+		// La case est-elle jouable ?
+		// sinon => exception
+		if(!isCaseJouable(c, couleur)) {
+			throw new IllegalArgumentException("La case "+c.getEmplacement() 
+				+ " n'est pas jouable pour la couleur " + couleur);
+		}
+		
+		// Oui
+		// Trouver tous les pions présents autour de cette case
+		// Récupérer la liste des pions présents autour de cette case
+		// ET qui sont d'une couleur différente
+		
+		Set<Case> casesARetourner = new TreeSet<>();
+		
+		for(Direction d: c.getDirVoisins()) {
+			casesARetourner.addAll(retournementsPossibles(c, d, couleur));
+			
+			/*
+			Couleur coulVoisin = getPion(v) != null?getPion(v).couleur:null;
+			if(coulVoisin != couleur) {
+				// C'est potentiellement une case à retourner
+				// Je dois donc aller "regarder" dans cette direction
+				// Pour voir si on rencontre un pion
+				// de la couleur jouée
+				
+				
+			}
+			*/
+		}
+		return casesARetourner;
+	}
+
 	private void ajouterPion(String coord, Couleur couleur) {
 		ajouterPion( damier.getCoord(coord), couleur );
 	}
@@ -36,12 +84,31 @@ public class Jeu {
 		prochainJoueur = Couleur.getOpposant(prochainJoueur);
 	}
 	
-	private Set<Case> retournementsPossibles(Case c, Direction d, Couleur coulCherchee){
+	
+	/**
+	 * Crée un Set ou ajouter toutes les les cases à retourner dans la direction
+	 * donnée
+	 * 
+	 * @param c
+	 * @param d
+	 * @param couleur la couleur vers laquelle retourner. Les cases à retourner sont donc de la couleur opposée
+	 * @return
+	 */
+	private Set<Case> retournementsPossibles(Case c, Direction d, Couleur couleur){
 		Set<Case> casesARetourner = new TreeSet<>();
 		while(c.hasNext(d)) {
+			c = c.getVoisin(d);
+			if(getPion(c).getCouleur() == couleur) {
+				//On a trouvé un pion de la même couleur, on arrête et on sort
+				break;
+			}
+			else {
+				//On ajoute le pion, puisqu'il est de couleur opposée
+				casesARetourner.add(c);
+			}
 			
 		}
-		return null;
+		return casesARetourner;
 	}
 	
 	public Collection<Case> getCasesOccupees() {
@@ -78,6 +145,15 @@ public class Jeu {
 		}
 		
 		return jouables;
+	}
+	
+	protected boolean isCaseJouable(Case square, Couleur couleur) {
+		for (Direction dirVoisin : Direction.values()) {
+			if(isCaseJouable(square, couleur, dirVoisin)) {
+				return true ; // On arrête immédiatement le test
+			}
+		}
+		return false;
 	}
 	
 
@@ -144,28 +220,17 @@ public class Jeu {
 		}
 	}
 	
+	public void addGameListener(GameListener l) {
+		listeners.add(l);
+	}
 	
-	public void jouer(Case c, Couleur couleur) {
-		// La case est-elle jouable ?
-		// sinon => exception
-		
-		// Oui
-		// Trouver tous les pions présents autour de cette case
-		// Récupérer la liste des pions présents autour de cette case
-		// ET qui sont d'une couleur différente
-		
-		Set<Case> casesARetourner = new TreeSet<>();
-		
-		for(Direction d: c.getDirVoisins()) {
-			Case v = c.getVoisin(d);
-			Couleur coulVoisin = getPion(v) != null?getPion(v).couleur:null;
-			if(coulVoisin != couleur) {
-				// C'est potentiellement une case à retourner
-				// Je dois donc aller "regarder" dans cette direction
-				// Pour voir si on rencontre un pion
-				// de la couleur jouée
-				
-			}
+	public void removeGameListener(GameListener l) {
+		listeners.remove(l);
+	}
+	
+	private void dispatchEvent(GameEvent e) {
+		for (GameListener l : listeners) {
+			l.handle(e);
 		}
 	}
 	

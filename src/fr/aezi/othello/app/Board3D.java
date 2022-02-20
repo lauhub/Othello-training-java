@@ -67,7 +67,7 @@ public class Board3D extends Group{
 		this.getChildren().add(box);
 		box.setTranslateZ(-0.001);
 		box.setAccessibleHelp("playable");
-		box.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
+		javafx.event.EventHandler<MouseEvent> eh = (e)-> {
 			if(box.getAccessibleHelp().equals("playable")) {
 				box.setAccessibleHelp("non-playable");
 				material.setDiffuseColor(nonPlayableColor);
@@ -77,7 +77,8 @@ public class Board3D extends Group{
 				material.setDiffuseColor(playableColor);
 				
 			}
-		});
+		};
+		//box.addEventHandler(MouseEvent.MOUSE_CLICKED, eh);
 		return box;
 	}
 	
