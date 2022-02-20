@@ -11,6 +11,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -74,6 +75,15 @@ public class Animation3D extends Application {
 		camera.setRotate(45);
 		scene.setCamera(camera);
 		
+		PointLight light = new PointLight();
+		light.setColor(Color.WHITE);
+		
+		Group lightGroup = new Group();
+		lightGroup.getChildren().add(light);
+		racine.getChildren().add(lightGroup);
+		lightGroup.setTranslateZ(-500);
+		lightGroup.setTranslateY(500);
+		light.setRotate(90);
 	}
 	
 	private Node creerPion(double x, double y, boolean white) {
@@ -143,7 +153,7 @@ public class Animation3D extends Application {
 		tlTurn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), kvValue, kvAxis));
 		Timeline tlFall = new Timeline();
 		tlFall.setRate(4.0);
-		tlFall.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0), minusTranslate));
+		tlFall.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), minusTranslate));
 
 		tl.play();
 		tlTurn.setDelay(Duration.seconds(0.1));

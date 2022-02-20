@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.geometry.Point2D;
+
 public class Damier {
 	private Map<String, Case> casesParCoord = new HashMap<>();
 	private List<Case> listeDeCasesParIndex = new ArrayList<>();
@@ -56,6 +58,14 @@ public class Damier {
 			throw new IllegalArgumentException(coord + " n'est pas une coordonnée valide.");
 		}
 		return casesParCoord.get(coord);
+	}
+	
+	public Point2D getCoord(Case c, int boardWidth, int boardHeight) {
+		return new Point2D((  2* c.getX() - 1) * boardWidth / 16, ( 2 * c.getY() -1) * boardHeight / 16);
+	}
+	public Point2D getCoord(String coord, int boardWidth, int boardHeight) {
+		Case c = getCoord(coord);
+		return getCoord(c, boardWidth, boardHeight);
 	}
 	
 	
