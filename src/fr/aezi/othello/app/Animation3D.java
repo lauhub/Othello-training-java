@@ -162,7 +162,7 @@ public class Animation3D extends Application {
 			tlFall.play();
 		});
 	}
-	private void tournerPion0(Node pion) {
+	public void tournerPion0(Node pion) {
 		System.out.println("Accessible Text:"+ pion.getAccessibleText());
 		pion.setRotationAxis(new Point3D(1, 1, 0));
 		DoubleProperty rotateProperty = pion.rotateProperty();

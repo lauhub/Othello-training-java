@@ -41,11 +41,7 @@ public class OthelloBoard extends Application {
 		othellier.setTranslateX(WIDTH / 2);
 		othellier.setTranslateY(HEIGHT / 2);
 		
-		
 		racine.getChildren().add(othellier);
-		
-		double diam = 800 / 8;
-		double step = diam / 2;
 
 		addDisc(Couleur.BLANC, "D4");
 		addDisc(Couleur.BLANC, "E5");
