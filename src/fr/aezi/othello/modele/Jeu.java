@@ -66,6 +66,10 @@ public class Jeu {
 			}
 			*/
 		}
+		for (Case case1 : casesARetourner) {
+			getPion(case1).setCouleur(couleur);
+		}
+		
 		Map<String, Object> properties = new HashMap<>();
 		properties.put(GameEvent.DISCS_TO_TURN, casesARetourner);
 		properties.put(GameEvent.PLAYED_COLOR, couleur);

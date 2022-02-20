@@ -18,9 +18,14 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -34,8 +39,11 @@ public class OthelloBoard extends Application {
 	private Damier damier = new Damier();
 	private Jeu jeu = null;
 	private Map<String, Disc> myDiscs = new HashMap<>();
-	private Map<String, Node> mySquares = new HashMap<>();
+	private Map<String, Box> mySquares = new HashMap<>();
 	private Board3D othellier ;
+	private Group labels ;
+	private Font labelsFont = new Font(30);
+
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -83,12 +91,39 @@ public class OthelloBoard extends Application {
 		lightGroup.setTranslateZ(-1100);
 		lightGroup.setTranslateY(-900);
 		//light.setRotate(45);
+
+		labels = new Group();
+		labels.setTranslateZ(-2);
+		racine.getChildren().add(labels);
+		addLabels();
 		
 		for (String coord : damier.getCoordSet()) {
 			Node square = addPlayableSquare(coord);
 			square.addEventHandler(MouseEvent.MOUSE_CLICKED, this::squareClicked);
+			
+			labels.getChildren().add(createSquareLabel(coord, square.getTranslateX(), square.getTranslateY()));
 		}
 		
+	}
+	
+	private void addLabels() {
+		String[] coords = new String[] {"A1", "B2", "C3", "D4", "E5", "F6", "G7", "H8"}; 
+		for (String coord : coords) {
+			Point2D location = damier.getCoord(coord, WIDTH, HEIGHT);
+			Text lineLabel = new Text(coord.substring(0, 1));
+			lineLabel.setFont(labelsFont);
+			lineLabel.setTranslateX(location.getX());
+			labels.getChildren().add(lineLabel);
+		}
+
+	}
+	
+	private Text createSquareLabel(String coord, double x, double y) {
+		Text label = new Text(coord);
+		label.setFont(labelsFont);
+		label.setTranslateX(x);
+		label.setTranslateY(y);
+		return label;
 	}
 	
 	public void setJeu(Jeu jeu) {
@@ -98,10 +133,24 @@ public class OthelloBoard extends Application {
 		}
 		
 		for(Case caseJouable: jeu.getCasesJouables()) {
-			mySquares.get(caseJouable.getEmplacement()).setVisible(true);
+			setSquareVisible(mySquares.get(caseJouable.getEmplacement()), true);
 		}
 		jeu.addGameListener(this::gameModified);
 	}
+	
+	private void setSquareVisible(Box square, boolean b) {
+		PhongMaterial material = (PhongMaterial)square.getMaterial();
+		if(b) {
+			square.setAccessibleHelp("playable");
+			material.setDiffuseColor(Board3D.PLAYABLE_COLOR);
+		}
+		else {
+			square.setAccessibleHelp("non-playable");
+			material.setDiffuseColor(Board3D.NON_PLAYABLE_COLOR);
+			
+		}
+	}
+	
 	
 	private void gameModified(GameEvent e) {
 		//Game was modified
@@ -122,11 +171,14 @@ public class OthelloBoard extends Application {
 		}
 		// Et une fois cela fait, on met à jour les cases jouables
 		for (String coord : mySquares.keySet()) {
-			System.out.println(coord);
-			mySquares.get(coord).setVisible(false);
+			System.out.println("update playable at: " + coord);
+			setSquareVisible(mySquares.get(coord), false);
 		}
+		
+		// Afficheles cases jouables
 		for(Case squareModel: jeu.getCasesJouables()) {
-			mySquares.get(squareModel.getEmplacement()).setVisible(true);
+			System.out.println("Case jouable (affichage): " + squareModel.getEmplacement());
+			setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
 		}
 		
 		/*
@@ -138,24 +190,31 @@ public class OthelloBoard extends Application {
 				myDiscs.get(coord).runItNow();
 			}
 		}
-
+		System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
+		System.out.println(jeu);
+		System.out.println("=============================");
 		
 	}
 	
 	private void squareClicked(MouseEvent e) {
-		if(e.getSource() instanceof Node) {
-			Node square = (Node)e.getSource();
-			String coord = square.getAccessibleText();
-			if(coord == null) {
-				throw new IllegalStateException("Not a known square");
+		if(e.getButton() == MouseButton.PRIMARY) {
+			if(e.getSource() instanceof Node) {
+				Node square = (Node)e.getSource();
+				System.out.println("squareClicked: "+square.getAccessibleText()+ " is "+ square.getAccessibleHelp() );
+				if("playable".equals(square.getAccessibleHelp())){
+					String coord = square.getAccessibleText();
+					if(coord == null) {
+						throw new IllegalStateException("Not a known square");
+					}
+					Case gameSquare = damier.getCoord(coord);
+					Couleur colorToPlay = jeu.getProchainJoueur();
+					jeu.changerProchainJoueur();
+					jeu.jouer(gameSquare, colorToPlay);
+				}
 			}
-			Case gameSquare = damier.getCoord(coord);
-			Couleur colorToPlay = jeu.getProchainJoueur();
-			jeu.changerProchainJoueur();
-			jeu.jouer(gameSquare, colorToPlay);
-		}
-		else {
-			System.err.println(e.getSource()+ " is not a Node");
+			else {
+				System.err.println(e.getSource()+ " is not a Node");
+			}
 		}
 	}
 	
@@ -197,10 +256,11 @@ public class OthelloBoard extends Application {
 	
 	private Node addPlayableSquare(String coord) {
 		Point2D location = damier.getCoord(coord, WIDTH, HEIGHT);
-		Node square = othellier.createSquare(location.getX(), location.getY());
+		Box square = othellier.createSquare(location.getX(), location.getY());
 		square.setAccessibleText(coord);
-		square.setVisible(false);
+		setSquareVisible(square, false);
 		mySquares.put(coord, square);
+		System.out.println("addPlayableSquare("+ coord+ " "+ location);
 		return square;
 	}
 	

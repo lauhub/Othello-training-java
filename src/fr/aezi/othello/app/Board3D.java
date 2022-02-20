@@ -3,15 +3,22 @@ package fr.aezi.othello.app;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
 
 public class Board3D extends Group{
 	double boardWidth = 800;
 	double boardHeight = 800;
+	private static final double colorStrength = 0.2;
+
+	public static final Color PLAYABLE_COLOR = new Color(colorStrength+0.2, colorStrength, colorStrength, 0.01);
+	public static final Color NON_PLAYABLE_COLOR = new Color(colorStrength, colorStrength, colorStrength, 0.00);
+
 	public Board3D(double width, double height) {
 		this.boardWidth = width;
 		this.boardHeight = height;
@@ -35,6 +42,13 @@ public class Board3D extends Group{
 			createLine(0,i, true);
 			i += step;
 		}
+		Node origin = new Cylinder(5, 100);
+		origin.setTranslateX(-400);
+		origin.setTranslateY(-400);
+		origin.setTranslateZ(-50);
+		origin.setRotationAxis(Rotate.X_AXIS);
+		origin.setRotate(90);
+		this.getChildren().add(origin);
 	}
 	
 	
@@ -54,31 +68,24 @@ public class Board3D extends Group{
 		lineBox.setTranslateZ(-0.5);
 		this.getChildren().add(lineBox);
 	}
-	public Node createSquare(double x, double y) {
+	public Box createSquare(double x, double y) {
 		Box box = new Box(boardWidth / 8 - 4, boardHeight / 8 -4 , 2);
 		PhongMaterial material = new PhongMaterial();
-		double colorStrength = 0.2;
-		Color playableColor = new Color(colorStrength+0.2, colorStrength, colorStrength, 0.01);
-		Color nonPlayableColor = new Color(colorStrength, colorStrength, colorStrength, 0.00);
-		material.setDiffuseColor(playableColor);
+		material.setDiffuseColor(PLAYABLE_COLOR);
 		box.setMaterial(material);
 		box.setTranslateX(x - 400);
 		box.setTranslateY(y - 400);
 		this.getChildren().add(box);
 		box.setTranslateZ(-0.001);
 		box.setAccessibleHelp("playable");
-		javafx.event.EventHandler<MouseEvent> eh = (e)-> {
-			if(box.getAccessibleHelp().equals("playable")) {
-				box.setAccessibleHelp("non-playable");
-				material.setDiffuseColor(nonPlayableColor);
+
+		javafx.event.EventHandler<MouseEvent> infoHandler = (e)-> {
+			if(e.getButton() == MouseButton.SECONDARY ) {
+				System.out.println("This is square: " + box.getAccessibleText());
 			}
-			else {
-				box.setAccessibleHelp("playable");
-				material.setDiffuseColor(playableColor);
 				
-			}
 		};
-		//box.addEventHandler(MouseEvent.MOUSE_CLICKED, eh);
+		box.addEventHandler(MouseEvent.MOUSE_CLICKED, infoHandler);
 		return box;
 	}
 	

@@ -55,5 +55,24 @@ public class PionJouableTest {
 		assertEquals(true, jouables.contains(damier.getCoord("F5")));
 		assertEquals(true, jouables.contains(damier.getCoord("E6")));
 	}
+
 	
+	@Test
+	void testGetCasesJouablesApresE6Noir() {
+		jeu.jouer(damier.getCoord("E6"), Couleur.NOIR);
+		jeu.getPion(damier.getCoord("E5")).setCouleur(Couleur.NOIR);
+		Set<Case> jouables = jeu.getCasesJouables(Couleur.BLANC);
+		System.out.println(jeu);
+		
+		assertEquals(false, jouables.contains(damier.getCoord("D3")));
+		assertEquals(false, jouables.contains(damier.getCoord("C4")));
+		assertEquals(false, jouables.contains(damier.getCoord("F5")));
+		assertEquals(false, jouables.contains(damier.getCoord("E6")));
+		assertEquals(true, jouables.contains(damier.getCoord("D6")));
+		assertEquals(false, jouables.contains(damier.getCoord("E3")));
+		assertEquals(false, jouables.contains(damier.getCoord("F3")));
+		assertEquals(true, jouables.contains(damier.getCoord("F4")));
+		assertEquals(true, jouables.contains(damier.getCoord("F6")));
+	}
+
 }
