@@ -101,7 +101,7 @@ public class OthelloBoard extends Application {
 			Node square = addPlayableSquare(coord);
 			square.addEventHandler(MouseEvent.MOUSE_CLICKED, this::squareClicked);
 			
-			labels.getChildren().add(createSquareLabel(coord, square.getTranslateX(), square.getTranslateY()));
+			labels.getChildren().add(createSquareLabel(coord, square.getTranslateX()+400, square.getTranslateY()+400));
 		}
 		
 	}
@@ -113,7 +113,15 @@ public class OthelloBoard extends Application {
 			Text lineLabel = new Text(coord.substring(0, 1));
 			lineLabel.setFont(labelsFont);
 			lineLabel.setTranslateX(location.getX());
+			lineLabel.setTranslateY(-20);
 			labels.getChildren().add(lineLabel);
+			
+			Text colLabel = new Text(coord.substring(1, 2));
+			colLabel.setFont(labelsFont);
+			colLabel.setTranslateX(-30);
+			colLabel.setTranslateY(location.getY());
+			labels.getChildren().add(colLabel);
+			
 		}
 
 	}

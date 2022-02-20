@@ -102,6 +102,11 @@ public class Jeu {
 	 */
 	protected Set<Case> retournementsPossibles(Case c, Direction d, Couleur couleur){
 		Set<Case> casesARetourner = new TreeSet<>();
+		
+		if(c.hasNext(d) && !peutEtrePris(c.getVoisin(d), couleur, d)) {
+			return casesARetourner;
+		}
+		
 		while(c.hasNext(d)) {
 			c = c.getVoisin(d);
 			Pion disc = getPion(c);
@@ -204,9 +209,14 @@ public class Jeu {
 		// opposée et qu'un pion de la couleur donnée soit
 		// sur la même direction
 		Case suivante = square.getVoisin(direction);
-		Pion pionSuivant = getPion(suivante);
-		if(pionSuivant != null && pionSuivant.getCouleur().isOppose(couleur)) {
-			return peutEtrePris(suivante, couleur, direction);
+		if(suivante != null) {
+			Pion pionSuivant = getPion(suivante);
+			if(pionSuivant != null && pionSuivant.getCouleur().isOppose(couleur)) {
+				return peutEtrePris(suivante, couleur, direction);
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			return false;
