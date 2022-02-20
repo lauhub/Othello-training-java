@@ -14,17 +14,15 @@ public class Damier {
 	private String[] lettreLignes = new String[9];
 	
 	public Damier(){
-		int z = 1;
-		for(char c : "ABCDEFGH".toCharArray()) {
-			lettreLignes[z] = "" + c;
-			z++;
-		}
-		lettreLignes[0] = null;
-		
 		int idx = 0;
-		for (int i = 1; i < 9; i++) {
-			for(int j = 1 ; j < lettreLignes.length ; j++) {
-				String clef = lettreLignes[j] + i;
+		int i = 0;
+		int j = 0;
+		for(char ligne: "ABCDEFGH".toCharArray()) {
+			i++;
+			j = 0;
+			for(char col: "12345678".toCharArray()) {
+				j++;
+				String clef = "" + ligne + col;
 				Case c = new Case(clef, idx, i, j);
 				casesParCoord.put(clef, c);
 				listeDeCasesParIndex.add(c);
