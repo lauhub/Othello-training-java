@@ -100,7 +100,7 @@ public class Jeu {
 	 * @param couleur la couleur vers laquelle retourner. Les cases à retourner sont donc de la couleur opposée
 	 * @return
 	 */
-	private Set<Case> retournementsPossibles(Case c, Direction d, Couleur couleur){
+	protected Set<Case> retournementsPossibles(Case c, Direction d, Couleur couleur){
 		Set<Case> casesARetourner = new TreeSet<>();
 		while(c.hasNext(d)) {
 			c = c.getVoisin(d);
