@@ -17,8 +17,8 @@ public class Case implements Comparable<Case>{
 	}
 	
 	public int getIndex() {return index;}
-	public int getX() {return lig;}
-	public int getY() {return col;}
+	public int getX() {return col;}
+	public int getY() {return lig;}
 	public String toString() {
 		return emplacement + "("+index+"/"+lig+","+col+")";
 	}

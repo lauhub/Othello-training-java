@@ -17,12 +17,12 @@ public class Damier {
 		int idx = 0;
 		int i = 0;
 		int j = 0;
-		for(char ligne: "ABCDEFGH".toCharArray()) {
+		for(char ligne: "12345678".toCharArray()) {
 			i++;
 			j = 0;
-			for(char col: "12345678".toCharArray()) {
+			for(char col: "ABCDEFGH".toCharArray()) {
 				j++;
-				String clef = "" + ligne + col;
+				String clef = "" + col + ligne;
 				Case c = new Case(clef, idx, i, j);
 				casesParCoord.put(clef, c);
 				listeDeCasesParIndex.add(c);
