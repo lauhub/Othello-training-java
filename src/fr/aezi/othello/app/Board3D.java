@@ -2,6 +2,7 @@ package fr.aezi.othello.app;
 
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -37,7 +38,7 @@ public class Board3D extends Group{
 	
 	
 	private void createLine(double x, double y, boolean vertical) {
-		Box lineBox = new Box(4,800,2);
+		Box lineBox = new Box(4, vertical?boardHeight:boardWidth, 2);
 		PhongMaterial material = new PhongMaterial();
 		material.setDiffuseColor(Color.BLACK);
 		lineBox.setMaterial(material);
@@ -51,6 +52,32 @@ public class Board3D extends Group{
 		}
 		lineBox.setTranslateZ(-0.5);
 		this.getChildren().add(lineBox);
+	}
+	public Box createPlayableBox(double x, double y) {
+		Box box = new Box(boardWidth / 8 - 4, boardHeight / 8 -4 , 2);
+		PhongMaterial material = new PhongMaterial();
+		double colorStrength = 0.2;
+		Color playableColor = new Color(colorStrength+0.2, colorStrength, colorStrength, 0.01);
+		Color nonPlayableColor = new Color(colorStrength, colorStrength, colorStrength, 0.00);
+		material.setDiffuseColor(playableColor);
+		box.setMaterial(material);
+		box.setTranslateX(x - 400);
+		box.setTranslateY(y - 400);
+		this.getChildren().add(box);
+		box.setTranslateZ(-0.001);
+		box.setAccessibleHelp("playable");
+		box.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
+			if(box.getAccessibleHelp().equals("playable")) {
+				box.setAccessibleHelp("non-playable");
+				material.setDiffuseColor(nonPlayableColor);
+			}
+			else {
+				box.setAccessibleHelp("playable");
+				material.setDiffuseColor(playableColor);
+				
+			}
+		});
+		return box;
 	}
 	
 }

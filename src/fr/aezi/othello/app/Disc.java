@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -49,8 +50,10 @@ public class Disc extends Group{
 		
 		EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent t) {            
+            public void handle(MouseEvent t) {
+            	if(t.getButton() == MouseButton.SECONDARY){
                     turnDisc();
+            	}
             }
         };
 		
@@ -76,15 +79,32 @@ public class Disc extends Group{
 			return 0.0;
 		}
 	}
+	private Tuple<Timeline> animationToRun ;
+	public void setDiscToBeTurned(double delay) {
+		whiteUp = !whiteUp;
+		animationToRun = runDiscRotation(getRotationAngle());
+		
+		animationToRun.first.setDelay(Duration.seconds(delay));
+		animationToRun.second.setDelay(Duration.seconds(delay + 0.1));
+
+	}
 	
+	public void runItNow() {
+		if(animationToRun != null) {
+			animationToRun.first.play();
+			animationToRun.second.play();
+		}
+	}
 	
-	private void turnDisc() {
+	public void turnDisc() {
 		whiteUp = !whiteUp;
 		
-		runDiscRotation(getRotationAngle());
+		Tuple<Timeline> myTls = runDiscRotation(getRotationAngle());
+		myTls.first.play();
+		myTls.second.play();
 	}
 
-	private void runDiscRotation(double newAngle) {
+	private Tuple<Timeline> runDiscRotation(double newAngle) {
 		setRotationAxis(new Point3D(1, 1, 0));
 
 		KeyValue plusTranslate = new KeyValue(translateZProperty(), -50, Interpolator.EASE_OUT);
@@ -102,12 +122,18 @@ public class Disc extends Group{
 		tlFall.setRate(4.0);
 		tlFall.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), minusTranslate));
 
-		tl.play();
 		tlTurn.setDelay(Duration.seconds(0.1));
-		tlTurn.play();
 		tl.setOnFinished((event)->{
 			tlFall.play();
 		});
-
+		return new Tuple<Timeline>(tl, tlTurn);
+	}
+	class Tuple<T> {
+		Tuple(T first, T second ){
+			this.first = first;
+			this.second = second;
+		}
+		T first ;
+		T second ;
 	}
 }
