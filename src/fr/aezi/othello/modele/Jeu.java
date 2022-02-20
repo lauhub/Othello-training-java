@@ -31,7 +31,9 @@ public class Jeu {
 	}
 	public void ajouterPion(String coord) {
 		ajouterPion(coord, prochainJoueur);
-		//prochainJoueur = 
+	}
+	public void changerProchainJoueur() {
+		prochainJoueur = Couleur.getOpposant(prochainJoueur);
 	}
 	
 	private Set<Case> retournementsPossibles(Case c, Direction d, Couleur coulCherchee){
@@ -42,10 +44,14 @@ public class Jeu {
 		return null;
 	}
 	
+	public Collection<Case> getCasesOccupees() {
+		return casesOccupees;
+	}
 	
-	private Pion getPion(Case c) {
+	public Pion getPion(Case c) {
 		return mesPions[c.getIndex()];
 	}
+	
 	public void jouer(Case c, Couleur couleur) {
 		// La case est-elle jouable ?
 		// sinon => exception

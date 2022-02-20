@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
 import fr.aezi.othello.modele.Jeu;
@@ -42,8 +43,8 @@ public class OthelloBoard extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		initializeBoard(stage);
-		putInitialDiscsOnBoard();
-		putDiscsForTurn();
+		//putInitialDiscsOnBoard();
+		//putDiscsForTurn();
 		setJeu(new Jeu(damier));
 	}
 	private void initializeBoard(Stage stage) throws Exception {
@@ -91,6 +92,9 @@ public class OthelloBoard extends Application {
 	
 	public void setJeu(Jeu jeu) {
 		this.jeu = jeu;
+		for(Case square: jeu.getCasesOccupees()) {
+			addDisc(jeu.getPion(square).getCouleur(), square.getEmplacement());
+		}
 	}
 	
 	private void squareClicked(MouseEvent e) {
@@ -100,10 +104,8 @@ public class OthelloBoard extends Application {
 			if(coord == null) {
 				throw new IllegalStateException("Not a known square");
 			}
-			
-			//We should play here
 			jeu.ajouterPion(coord);
-			
+			jeu.changerProchainJoueur();
 		}
 		else {
 			System.err.println(e.getSource()+ " is not a Node");

@@ -15,4 +15,13 @@ public enum Couleur {
 		}
 		throw new IllegalArgumentException("couleur invalide");
 	}
+	
+	public static Couleur getOpposant(Couleur c) {
+		if(c == NOIR) {
+			return BLANC;
+		}
+		else {
+			return NOIR;
+		}
+	}
 }

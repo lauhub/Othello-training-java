@@ -104,4 +104,8 @@ public class Case implements Comparable<Case>{
 	public int compareTo(Case o) {
 		return this.index - o.index ;
 	}
+	
+	public String getEmplacement() {
+		return emplacement;
+	}
 }
