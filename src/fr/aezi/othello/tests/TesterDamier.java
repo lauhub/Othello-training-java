@@ -30,13 +30,20 @@ public class TesterDamier {
 		Case voisine = damier.getCoord("A1");
 		while(voisine != null) {
 			System.out.println(voisine);
-			voisine = voisine.getVoisin(Direction.SE);
+			voisine = voisine.getVoisin(Direction.S);
 		}
+		
 		
 		Pion p = new Pion(Couleur.BLANC);
 		System.out.println(p);
 		Jeu jeu = new Jeu(damier);
 		System.out.println(jeu);
+		System.out.println("-------------------------");
+		System.out.println(damier.reprCoords());
+		System.out.println("Voisin sud de A4:"+a4.getVoisin(Direction.S)) ;
+		System.out.println("Voisin nord de A4:"+a4.getVoisin(Direction.N)) ;
+		System.out.println("Voisin sud de D1:"+damier.getCoord("D1").getVoisin(Direction.N)) ;
+		System.out.println("Voisin ouest de D1:"+damier.getCoord("D1").getVoisin(Direction.O)) ;
 	}
 
 }

@@ -46,7 +46,6 @@ public class Case implements Comparable<Case>{
 	}
 	
 	public boolean hasNext(Direction d) { return false ; }
-	public Case getNext(Direction d) { return null ; }
 	
 	public String reprCaseEtVoisinage() {
 		StringBuffer sb = new StringBuffer();

@@ -95,6 +95,10 @@ public class OthelloBoard extends Application {
 		for(Case square: jeu.getCasesOccupees()) {
 			addDisc(jeu.getPion(square).getCouleur(), square.getEmplacement());
 		}
+		
+		for(Case caseJouable: jeu.getCasesJouables()) {
+			mySquares.get(caseJouable.getEmplacement()).setVisible(true);
+		}
 	}
 	
 	private void squareClicked(MouseEvent e) {

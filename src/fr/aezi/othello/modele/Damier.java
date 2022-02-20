@@ -22,26 +22,26 @@ public class Damier {
 		lettreLignes[0] = null;
 		
 		int idx = 0;
-		for (int i = 1; i < lettreLignes.length; i++) {
-			for(int j = 1 ; j < 9 ; j++) {
-				String clef = lettreLignes[i] + j;
+		for (int i = 1; i < 9; i++) {
+			for(int j = 1 ; j < lettreLignes.length ; j++) {
+				String clef = lettreLignes[j] + i;
 				Case c = new Case(clef, idx, i, j);
 				casesParCoord.put(clef, c);
 				listeDeCasesParIndex.add(c);
 				
-				//Si première ligne:
+				//Si seconde colonne:
 				if (j > 1) {c.setVoisin(Direction.O, listeDeCasesParIndex.get(c.getIndex() - 1));}
 				// Si seconde ligne ou +:
 				if(i > 1) {
 					//Nord
-					c.setVoisin(Direction.N, listeDeCasesParIndex.get(c.getIndex() - 8));
+					c.setVoisin(Direction.N, listeDeCasesParIndex.get(idx - 8));
 					if(j > 1) {
 						//Nord-Ouest
-						c.setVoisin(Direction.NO, listeDeCasesParIndex.get(c.getIndex() - 9));
+						c.setVoisin(Direction.NO, listeDeCasesParIndex.get(idx - 9));
 					}
 					if(j < 8) {
 						//Nord-Est
-						c.setVoisin(Direction.NE, listeDeCasesParIndex.get(c.getIndex() - 7));
+						c.setVoisin(Direction.NE, listeDeCasesParIndex.get(idx - 7));
 					}
 				}
 				idx++;
@@ -88,6 +88,21 @@ public class Damier {
 		
 		return sb.toString();
 	}
+
+	public String reprCoords() {
+		StringBuilder sb = new StringBuilder();
+		int i = 0;
+		for(Case c : listeDeCasesParIndex) {
+			if(i % 8 == 0) {
+				sb.append("\n|");
+			}
+			sb.append(c.getEmplacement()).append("|");
+			i++;
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
+
 	
 	public String reprCasesEtVoisinages() {
 		StringBuffer sb = new StringBuffer();

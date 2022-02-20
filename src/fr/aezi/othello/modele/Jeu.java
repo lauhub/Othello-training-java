@@ -52,6 +52,99 @@ public class Jeu {
 		return mesPions[c.getIndex()];
 	}
 	
+	protected Set<Case> getCasesJouables(Couleur couleur){
+		/*
+		 * Les cases jouables sont en fonction de la couleur
+		 * du prochain joueur et des cases libres adjacentes à ses pions
+		 * 
+		 */
+		Set<Case> jouables = new TreeSet<>();
+		
+		for(Case square: casesOccupees) {
+			if(!getPion(square).getCouleur().equals(couleur)) {
+				// On cherche les cases libres adjacentes pour lesquelles
+				// on pourrait jouer
+				for(Direction dirVoisin: Direction.values()) {
+					Case caseVoisine = square.getVoisin(dirVoisin); 
+					if(getPion(caseVoisine) == null) {
+						//La case est libre
+						//Verifions si elle est jouable pour le joueur courant
+						if(isCaseJouable(caseVoisine, couleur, dirVoisin.getOppose())) {
+							jouables.add(caseVoisine);
+						}
+					}
+				}
+			}
+		}
+		
+		return jouables;
+	}
+	
+
+	
+	public Set<Case> getCasesJouables(){
+		/*
+		 * Les cases jouables sont en fonction de la couleur
+		 * du prochain joueur et des cases libres adjacentes à ses pions
+		 * 
+		 */
+		Set<Case> jouables = new TreeSet<>();
+		
+		for(Case square: casesOccupees) {
+			if(!getPion(square).getCouleur().equals(prochainJoueur)) {
+				// On cherche les cases libres adjacentes pour lesquelles
+				// on pourrait jouer
+				for(Direction dirVoisin: Direction.values()) {
+					Case caseVoisine = square.getVoisin(dirVoisin); 
+					if(getPion(caseVoisine) == null) {
+						//La case est libre
+						//Verifions si elle est jouable pour le joueur courant
+						if(isCaseJouable(caseVoisine, prochainJoueur, dirVoisin.getOppose())) {
+							jouables.add(caseVoisine);
+						}
+					}
+				}
+			}
+		}
+		
+		return jouables;
+	}
+	
+	protected boolean isCaseJouable(Case square, Couleur couleur, Direction direction) {
+		//Cherche si la case passée en paramètre est jouable
+		// dans la direction donnée pour la couleur donnée
+		// Pour cela, il faut que la case suivante soit de la couleur
+		// opposée et qu'un pion de la couleur donnée soit
+		// sur la même direction
+		Case suivante = square.getVoisin(direction);
+		Pion pionSuivant = getPion(suivante);
+		if(pionSuivant != null && pionSuivant.getCouleur().isOppose(couleur)) {
+			return peutEtrePris(suivante, couleur, direction);
+		}
+		else {
+			return false;
+		}
+	}
+	
+	protected boolean peutEtrePris(Case square, Couleur couleur, Direction direction) {
+		Case suivante = square.getVoisin(direction);
+		Pion pionSuivant = getPion(suivante);
+		
+		if(pionSuivant == null) {
+			return false; // s'il n'y a pas de suivant: le pion ne peut être pris
+		}
+		
+		if(pionSuivant.getCouleur().equals(couleur)) {
+			return true; // Le pion suivant est de la couleur cherchée
+			// donc dans cette direction
+			// on peut prendre
+		}
+		else {
+			return peutEtrePris(suivante, couleur, direction);
+		}
+	}
+	
+	
 	public void jouer(Case c, Couleur couleur) {
 		// La case est-elle jouable ?
 		// sinon => exception

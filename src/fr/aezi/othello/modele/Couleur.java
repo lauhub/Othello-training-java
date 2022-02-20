@@ -16,6 +16,10 @@ public enum Couleur {
 		throw new IllegalArgumentException("couleur invalide");
 	}
 	
+	public boolean isOppose(Couleur c) {
+		return c != this;
+	}
+	
 	public static Couleur getOpposant(Couleur c) {
 		if(c == NOIR) {
 			return BLANC;
