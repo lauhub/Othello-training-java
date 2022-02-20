@@ -180,12 +180,14 @@ public class Jeu {
 				// On cherche les cases libres adjacentes pour lesquelles
 				// on pourrait jouer
 				for(Direction dirVoisin: Direction.values()) {
-					Case caseVoisine = square.getVoisin(dirVoisin); 
-					if(getPion(caseVoisine) == null) {
-						//La case est libre
-						//Verifions si elle est jouable pour le joueur courant
-						if(isCaseJouable(caseVoisine, prochainJoueur, dirVoisin.getOppose())) {
-							jouables.add(caseVoisine);
+					Case caseVoisine = square.getVoisin(dirVoisin);
+					if(caseVoisine != null) {
+						if(getPion(caseVoisine) == null) {
+							//La case est libre
+							//Verifions si elle est jouable pour le joueur courant
+							if(isCaseJouable(caseVoisine, prochainJoueur, dirVoisin.getOppose())) {
+								jouables.add(caseVoisine);
+							}
 						}
 					}
 				}
@@ -213,10 +215,13 @@ public class Jeu {
 	
 	protected boolean peutEtrePris(Case square, Couleur couleur, Direction direction) {
 		Case suivante = square.getVoisin(direction);
+		if(suivante == null) {
+			return false;  // s'il n'y a pas de case suivante: le pion ne peut être pris
+		}
 		Pion pionSuivant = getPion(suivante);
 		
 		if(pionSuivant == null) {
-			return false; // s'il n'y a pas de suivant: le pion ne peut être pris
+			return false;  // s'il n'y a pas de suivant: le pion ne peut être pris
 		}
 		
 		if(pionSuivant.getCouleur().equals(couleur)) {
@@ -244,14 +249,25 @@ public class Jeu {
 	}
 	
 	public String toString() {
-		String s = "";
-		for (int i = 0; i < mesPions.length; i++) {
-			if(i > 0 && i % 8 == 0) {
-				s += "|\n";
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("  |");
+		for(char col: "12345678".toCharArray()) {
+			sb.append(col).append("|");
+		};
+		for(char line : "ABCDEFGH".toCharArray()) {
+			sb.append("\n").append(line).append(" |");
+			for(char col: "12345678".toCharArray()) {
+				Pion p = getPion(damier.getCoord(""+line+col));
+				if(p != null) {
+					sb.append(p.getCouleur().nomCourt()).append("|");
+					
+				}
+				else {
+					sb.append(" |");
+				}
 			}
-			s = s + "|" + ( mesPions[i] == null?" ":mesPions[i].toString());
 		}
-		s += "|\n";
-		return s;
+		return sb.toString();
 	}
 }

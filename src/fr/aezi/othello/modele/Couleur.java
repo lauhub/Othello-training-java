@@ -1,8 +1,11 @@
 package fr.aezi.othello.modele;
 
 public enum Couleur {
-	NOIR, BLANC;
-	
+	NOIR("N"), BLANC("B");
+	private String court;
+	private Couleur(String nomCourt) {
+		court = nomCourt;
+	}
 	public static Couleur getCouleur(String s) {
 		if(s == null) {
 			throw new IllegalArgumentException("ne peut être null");
@@ -27,5 +30,8 @@ public enum Couleur {
 		else {
 			return NOIR;
 		}
+	}
+	public String nomCourt() {
+		return court;
 	}
 }
