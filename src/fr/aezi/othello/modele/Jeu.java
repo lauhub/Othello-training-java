@@ -151,12 +151,14 @@ public class Jeu {
 				// On cherche les cases libres adjacentes pour lesquelles
 				// on pourrait jouer
 				for(Direction dirVoisin: Direction.values()) {
-					Case caseVoisine = square.getVoisin(dirVoisin); 
-					if(getPion(caseVoisine) == null) {
-						//La case est libre
-						//Verifions si elle est jouable pour le joueur courant
-						if(isCaseJouable(caseVoisine, couleur, dirVoisin.getOppose())) {
-							jouables.add(caseVoisine);
+					Case caseVoisine = square.getVoisin(dirVoisin);
+					if(caseVoisine != null) {
+						if(getPion(caseVoisine) == null) {
+							//La case est libre
+							//Verifions si elle est jouable pour le joueur courant
+							if(isCaseJouable(caseVoisine, couleur, dirVoisin.getOppose())) {
+								jouables.add(caseVoisine);
+							}
 						}
 					}
 				}
@@ -164,6 +166,10 @@ public class Jeu {
 		}
 		
 		return jouables;
+	}
+	
+	public Set<Case> getCasesJouables(){
+		return getCasesJouables(prochainJoueur);
 	}
 	
 	protected boolean isCaseJouable(Case square, Couleur couleur) {
@@ -176,36 +182,6 @@ public class Jeu {
 	}
 	
 
-	
-	public Set<Case> getCasesJouables(){
-		/*
-		 * Les cases jouables sont en fonction de la couleur
-		 * du prochain joueur et des cases libres adjacentes à ses pions
-		 * 
-		 */
-		Set<Case> jouables = new TreeSet<>();
-		
-		for(Case square: casesOccupees) {
-			if(!getPion(square).getCouleur().equals(prochainJoueur)) {
-				// On cherche les cases libres adjacentes pour lesquelles
-				// on pourrait jouer
-				for(Direction dirVoisin: Direction.values()) {
-					Case caseVoisine = square.getVoisin(dirVoisin);
-					if(caseVoisine != null) {
-						if(getPion(caseVoisine) == null) {
-							//La case est libre
-							//Verifions si elle est jouable pour le joueur courant
-							if(isCaseJouable(caseVoisine, prochainJoueur, dirVoisin.getOppose())) {
-								jouables.add(caseVoisine);
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		return jouables;
-	}
 	
 	protected boolean isCaseJouable(Case square, Couleur couleur, Direction direction) {
 		//Cherche si la case passée en paramètre est jouable
