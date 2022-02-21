@@ -3,19 +3,23 @@ package fr.aezi.othello.modele;
 import java.util.Map;
 
 public class GameEvent {
-	
-	public static final String DISCS_TO_TURN = "disc.to.turn";
-	public static final String PLAYED_COLOR = "played.color";
+	public enum PropKeys {
+		DISCS_TO_TURN, PLAYED_COLOR, NEXT_PLAYER, PLAYER_MUST_PASS;
+		
+	}
 	
 	private Object source;
-	private Map<String, Object> properties;
-	public GameEvent(Object source, Map<String, Object> properties) {
+	private Map<PropKeys, Object> properties;
+	public GameEvent(Object source, Map<PropKeys, Object> properties) {
 		this.properties = properties;
 		this.source = source;
 	}
 	
-	public Object getProperty(String name) {
+	public Object getProperty(PropKeys name) {
 		return properties.get(name);
+	}
+	public boolean hasProperty(PropKeys name) {
+		return properties.containsKey(name);
 	}
 	public Object getSource() { return source; }
 

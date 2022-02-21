@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fr.aezi.othello.TerminalInterface;
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
@@ -20,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -177,12 +175,13 @@ public class OthelloBoard extends Application {
 	
 	private void gameModified(GameEvent e) {
 		//Game was modified
-		if(e.getSource() instanceof Case) {
+		if(e.hasProperty(GameEvent.PropKeys.DISCS_TO_TURN)) {
 			Case playedSquare = (Case)e.getSource();
-			Couleur playedColor = (Couleur)e.getProperty(GameEvent.PLAYED_COLOR);
+			Couleur playedColor = (Couleur)e.getProperty(GameEvent.PropKeys.PLAYED_COLOR);
 			addDisc(playedColor, playedSquare.getEmplacement());
 			
-			Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.DISCS_TO_TURN);
+			@SuppressWarnings("unchecked")
+			Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.PropKeys.DISCS_TO_TURN);
 			double delay = 0.0;
 			for(Case c : discsToTurn) {
 				String coord = c.getEmplacement();
@@ -199,11 +198,6 @@ public class OthelloBoard extends Application {
 				setSquareVisible(mySquares.get(coord), false);
 			}
 			
-			// Affiche les cases jouables
-			for(Case squareModel: jeu.getCasesJouables(playedColor.getOpposant())) {
-				setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
-			}
-			
 			/*
 			 * TODO: montrer comment éviter cette redondance de code... (visiteur ?)
 			 */
@@ -216,6 +210,12 @@ public class OthelloBoard extends Application {
 			System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
 			System.out.println(jeu);
 			System.out.println("============="+jeu.getProchainJoueur()+"================");
+		}
+		if(e.hasProperty(GameEvent.PropKeys.NEXT_PLAYER)) {
+			// Affiche les cases jouables
+			for(Case squareModel: jeu.getCasesJouables((Couleur) e.getProperty(GameEvent.PropKeys.NEXT_PLAYER))) {
+				setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
+			}
 		}
 	}
 	

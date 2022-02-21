@@ -75,9 +75,9 @@ public class Jeu {
 			getPion(case1).setCouleur(couleur);
 		}
 		
-		Map<String, Object> properties = new HashMap<>();
-		properties.put(GameEvent.DISCS_TO_TURN, casesARetourner);
-		properties.put(GameEvent.PLAYED_COLOR, couleur);
+		Map<GameEvent.PropKeys, Object> properties = new HashMap<>();
+		properties.put(GameEvent.PropKeys.DISCS_TO_TURN, casesARetourner);
+		properties.put(GameEvent.PropKeys.PLAYED_COLOR, couleur);
 		GameEvent e = new GameEvent(c, properties);
 		dispatchEvent(e);
 		//TODO: We should test here if the next player can play !!!
@@ -91,13 +91,24 @@ public class Jeu {
 		ajouterPion(coord, prochainJoueur);
 	}
 	public void changerProchainJoueur() {
-		prochainJoueur = Couleur.getOpposant(prochainJoueur);
-		System.out.println("prochainJoueur:"+ prochainJoueur);
-		
-		Map<String, Object> properties = new HashMap<>();
-		properties.put("next.player", prochainJoueur);
-		GameEvent e = new GameEvent(this, properties);
-		dispatchEvent(e);
+		Couleur prochaineCouleur = prochainJoueur.getOpposant();
+		if(getCasesJouables(prochaineCouleur).size() > 0) {
+			
+			prochainJoueur = prochaineCouleur;
+			System.out.println("prochainJoueur:"+ prochainJoueur);
+			
+			Map<GameEvent.PropKeys, Object> properties = new HashMap<>();
+			properties.put(GameEvent.PropKeys.NEXT_PLAYER, prochainJoueur);
+			GameEvent e = new GameEvent(this, properties);
+			dispatchEvent(e);
+		}
+		else {
+			Map<GameEvent.PropKeys, Object> properties = new HashMap<>();
+			properties.put(GameEvent.PropKeys.PLAYER_MUST_PASS, prochaineCouleur);
+			properties.put(GameEvent.PropKeys.NEXT_PLAYER, prochainJoueur);
+			GameEvent e = new GameEvent(this, properties);
+			dispatchEvent(e);
+		}
 	}
 	
 	public Couleur getProchainJoueur() { return prochainJoueur; }
