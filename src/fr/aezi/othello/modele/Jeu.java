@@ -27,6 +27,11 @@ public class Jeu {
 		ajouterPion("E4", NOIR);
 		ajouterPion("D5", NOIR);
 	}
+
+	public Damier getDamier() {
+		return damier;
+	}
+
 	
 	public void ajouterPion(Case c, Couleur couleur) {
 		mesPions[c.getIndex()] = new Pion(couleur);

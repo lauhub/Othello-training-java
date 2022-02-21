@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import fr.aezi.othello.TerminalInterface;
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
@@ -47,6 +48,7 @@ public class OthelloBoard extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		
 	}
 	
 	@Override
@@ -55,6 +57,13 @@ public class OthelloBoard extends Application {
 		//putInitialDiscsOnBoard();
 		//putDiscsForTurn();
 		setJeu(new Jeu(damier));
+		
+		TextControl tc = new TextControl();
+		tc.setJeu(jeu);
+		Stage control = tc.createStage();
+		control.setX(stage.getX() + stage.getWidth());
+		control.setY(stage.getY());
+		control.show();
 	}
 	private void initializeBoard(Stage stage) throws Exception {
 		stage.setTitle("Othello - v0");
@@ -103,7 +112,6 @@ public class OthelloBoard extends Application {
 			
 			labels.getChildren().add(createSquareLabel(coord, square.getTranslateX()+400, square.getTranslateY()+400));
 		}
-		
 	}
 	
 	private void addLabels() {
@@ -179,13 +187,11 @@ public class OthelloBoard extends Application {
 		}
 		// Et une fois cela fait, on met à jour les cases jouables
 		for (String coord : mySquares.keySet()) {
-			System.out.println("update playable at: " + coord);
 			setSquareVisible(mySquares.get(coord), false);
 		}
 		
 		// Afficheles cases jouables
 		for(Case squareModel: jeu.getCasesJouables()) {
-			System.out.println("Case jouable (affichage): " + squareModel.getEmplacement());
 			setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
 		}
 		
