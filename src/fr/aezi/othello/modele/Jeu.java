@@ -93,6 +93,11 @@ public class Jeu {
 	public void changerProchainJoueur() {
 		prochainJoueur = Couleur.getOpposant(prochainJoueur);
 		System.out.println("prochainJoueur:"+ prochainJoueur);
+		
+		Map<String, Object> properties = new HashMap<>();
+		properties.put("next.player", prochainJoueur);
+		GameEvent e = new GameEvent(this, properties);
+		dispatchEvent(e);
 	}
 	
 	public Couleur getProchainJoueur() { return prochainJoueur; }

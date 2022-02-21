@@ -11,6 +11,7 @@ import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
 import fr.aezi.othello.modele.GameEvent;
+import fr.aezi.othello.modele.GameListener;
 import fr.aezi.othello.modele.Jeu;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -151,7 +152,13 @@ public class OthelloBoard extends Application {
 		for(Case caseJouable: jeu.getCasesJouables()) {
 			setSquareVisible(mySquares.get(caseJouable.getEmplacement()), true);
 		}
-		jeu.addGameListener(this::gameModified);
+		//jeu.addGameListener(this::gameModified);
+		jeu.addGameListener(new GameListener() {
+			@Override
+			public void handle(GameEvent e) {
+				gameModified(e);
+			}
+		});
 	}
 	
 	private void setSquareVisible(Box square, boolean b) {
@@ -170,45 +177,46 @@ public class OthelloBoard extends Application {
 	
 	private void gameModified(GameEvent e) {
 		//Game was modified
-		Case playedSquare = (Case)e.getSource();
-		Couleur playedColor = (Couleur)e.getProperty(GameEvent.PLAYED_COLOR);
-		addDisc(playedColor, playedSquare.getEmplacement());
-		
-		Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.DISCS_TO_TURN);
-		double delay = 0.0;
-		for(Case c : discsToTurn) {
-			String coord = c.getEmplacement();
-			if(myDiscs.containsKey(coord)) {
-				myDiscs.get(coord).setDiscToBeTurned(delay);
-				delay += 0.05;
+		if(e.getSource() instanceof Case) {
+			Case playedSquare = (Case)e.getSource();
+			Couleur playedColor = (Couleur)e.getProperty(GameEvent.PLAYED_COLOR);
+			addDisc(playedColor, playedSquare.getEmplacement());
+			
+			Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.DISCS_TO_TURN);
+			double delay = 0.0;
+			for(Case c : discsToTurn) {
+				String coord = c.getEmplacement();
+				if(myDiscs.containsKey(coord)) {
+					myDiscs.get(coord).setDiscToBeTurned(delay);
+					delay += 0.05;
+				}
+				else {
+					throw new IllegalStateException("Cannot turn a disc that is not displayed :" + c.getEmplacement());
+				}
 			}
-			else {
-				throw new IllegalStateException("Cannot turn a disc that is not displayed :" + c.getEmplacement());
+			// Et une fois cela fait, on met à jour les cases jouables
+			for (String coord : mySquares.keySet()) {
+				setSquareVisible(mySquares.get(coord), false);
 			}
-		}
-		// Et une fois cela fait, on met à jour les cases jouables
-		for (String coord : mySquares.keySet()) {
-			setSquareVisible(mySquares.get(coord), false);
-		}
-		
-		// Affiche les cases jouables
-		for(Case squareModel: jeu.getCasesJouables(playedColor.getOpposant())) {
-			setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
-		}
-		
-		/*
-		 * TODO: montrer comment éviter cette redondance de code... (visiteur ?)
-		 */
-		for(Case c : discsToTurn) {
-			String coord = c.getEmplacement();
-			if(myDiscs.containsKey(coord)) {
-				myDiscs.get(coord).runItNow();
+			
+			// Affiche les cases jouables
+			for(Case squareModel: jeu.getCasesJouables(playedColor.getOpposant())) {
+				setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
 			}
+			
+			/*
+			 * TODO: montrer comment éviter cette redondance de code... (visiteur ?)
+			 */
+			for(Case c : discsToTurn) {
+				String coord = c.getEmplacement();
+				if(myDiscs.containsKey(coord)) {
+					myDiscs.get(coord).runItNow();
+				}
+			}
+			System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
+			System.out.println(jeu);
+			System.out.println("============="+jeu.getProchainJoueur()+"================");
 		}
-		System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
-		System.out.println(jeu);
-		System.out.println("============="+jeu.getProchainJoueur()+"================");
-		
 	}
 	
 	private void squareClicked(MouseEvent e) {
