@@ -171,7 +171,8 @@ public class OthelloBoard extends Application {
 	private void gameModified(GameEvent e) {
 		//Game was modified
 		Case playedSquare = (Case)e.getSource();
-		addDisc((Couleur)e.getProperty(GameEvent.PLAYED_COLOR), playedSquare.getEmplacement());
+		Couleur playedColor = (Couleur)e.getProperty(GameEvent.PLAYED_COLOR);
+		addDisc(playedColor, playedSquare.getEmplacement());
 		
 		Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.DISCS_TO_TURN);
 		double delay = 0.0;
@@ -190,8 +191,8 @@ public class OthelloBoard extends Application {
 			setSquareVisible(mySquares.get(coord), false);
 		}
 		
-		// Afficheles cases jouables
-		for(Case squareModel: jeu.getCasesJouables()) {
+		// Affiche les cases jouables
+		for(Case squareModel: jeu.getCasesJouables(playedColor.getOpposant())) {
 			setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
 		}
 		
@@ -206,7 +207,7 @@ public class OthelloBoard extends Application {
 		}
 		System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
 		System.out.println(jeu);
-		System.out.println("=============================");
+		System.out.println("============="+jeu.getProchainJoueur()+"================");
 		
 	}
 	
@@ -222,7 +223,6 @@ public class OthelloBoard extends Application {
 					}
 					Case gameSquare = damier.getCoord(coord);
 					Couleur colorToPlay = jeu.getProchainJoueur();
-					jeu.changerProchainJoueur();
 					jeu.jouer(gameSquare, colorToPlay);
 				}
 			}

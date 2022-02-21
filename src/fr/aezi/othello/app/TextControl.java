@@ -35,8 +35,6 @@ public class TextControl{
 				jeu.jouer(
 						jeu.getDamier().getCoord(tf.getText()),
 								jeu.getProchainJoueur());
-				
-				jeu.changerProchainJoueur();		
 			}
 		});
 		racine.getChildren().add(tf);

@@ -79,8 +79,9 @@ public class Jeu {
 		properties.put(GameEvent.DISCS_TO_TURN, casesARetourner);
 		properties.put(GameEvent.PLAYED_COLOR, couleur);
 		GameEvent e = new GameEvent(c, properties);
-		
 		dispatchEvent(e);
+		//TODO: We should test here if the next player can play !!!
+		changerProchainJoueur();
 	}
 
 	private void ajouterPion(String coord, Couleur couleur) {
@@ -138,7 +139,7 @@ public class Jeu {
 		return mesPions[c.getIndex()];
 	}
 	
-	protected Set<Case> getCasesJouables(Couleur couleur){
+	public Set<Case> getCasesJouables(Couleur couleur){
 		/*
 		 * Les cases jouables sont en fonction de la couleur
 		 * du prochain joueur et des cases libres adjacentes à ses pions

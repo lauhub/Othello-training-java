@@ -23,6 +23,10 @@ public enum Couleur {
 		return c != this;
 	}
 	
+	public Couleur getOpposant() {
+		return getOpposant(this);
+	}
+	
 	public static Couleur getOpposant(Couleur c) {
 		if(c == NOIR) {
 			return BLANC;
