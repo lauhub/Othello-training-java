@@ -43,6 +43,7 @@ public class OthelloBoard extends Application {
 	private Board3D othellier ;
 	private Group labels ;
 	private Font labelsFont = new Font(30);
+	private StatusBar statusBar = new StatusBar();
 
 	
 	public static void main(String[] args) {
@@ -77,8 +78,8 @@ public class OthelloBoard extends Application {
 		othellier.setTranslateY(HEIGHT / 2);
 		
 		racine.getChildren().add(othellier);
+		racine.getChildren().add(statusBar);
 
-		
 		stage.setScene(scene);
 		stage.show();
 		
@@ -150,6 +151,7 @@ public class OthelloBoard extends Application {
 		for(Case caseJouable: jeu.getCasesJouables()) {
 			setSquareVisible(mySquares.get(caseJouable.getEmplacement()), true);
 		}
+		statusBar.setPlayer(jeu.getProchainJoueur());
 		//jeu.addGameListener(this::gameModified);
 		jeu.addGameListener(new GameListener() {
 			@Override
@@ -212,10 +214,12 @@ public class OthelloBoard extends Application {
 			System.out.println("============="+jeu.getProchainJoueur()+"================");
 		}
 		if(e.hasProperty(GameEvent.PropKeys.NEXT_PLAYER)) {
+			Couleur nextPlayer = (Couleur) e.getProperty(GameEvent.PropKeys.NEXT_PLAYER);
 			// Affiche les cases jouables
-			for(Case squareModel: jeu.getCasesJouables((Couleur) e.getProperty(GameEvent.PropKeys.NEXT_PLAYER))) {
+			for(Case squareModel: jeu.getCasesJouables(nextPlayer)) {
 				setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
 			}
+			statusBar.setPlayer(nextPlayer);
 		}
 	}
 	
