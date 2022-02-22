@@ -92,23 +92,18 @@ public class Jeu {
 	}
 	public void changerProchainJoueur() {
 		Couleur prochaineCouleur = prochainJoueur.getOpposant();
+		Map<GameEvent.PropKeys, Object> properties = new HashMap<>();
 		if(getCasesJouables(prochaineCouleur).size() > 0) {
 			
 			prochainJoueur = prochaineCouleur;
 			System.out.println("prochainJoueur:"+ prochainJoueur);
-			
-			Map<GameEvent.PropKeys, Object> properties = new HashMap<>();
-			properties.put(GameEvent.PropKeys.NEXT_PLAYER, prochainJoueur);
-			GameEvent e = new GameEvent(this, properties);
-			dispatchEvent(e);
 		}
 		else {
-			Map<GameEvent.PropKeys, Object> properties = new HashMap<>();
 			properties.put(GameEvent.PropKeys.PLAYER_MUST_PASS, prochaineCouleur);
-			properties.put(GameEvent.PropKeys.NEXT_PLAYER, prochainJoueur);
-			GameEvent e = new GameEvent(this, properties);
-			dispatchEvent(e);
 		}
+		properties.put(GameEvent.PropKeys.NEXT_PLAYER, prochainJoueur);
+		GameEvent e = new GameEvent(this, properties);
+		dispatchEvent(e);
 	}
 	
 	public Couleur getProchainJoueur() { return prochainJoueur; }
