@@ -110,8 +110,6 @@ public class OthelloBoard extends Application {
 		for (String coord : damier.getCoordSet()) {
 			Node square = addPlayableSquare(coord);
 			square.addEventHandler(MouseEvent.MOUSE_CLICKED, this::squareClicked);
-			
-			labels.getChildren().add(createSquareLabel(coord, square.getTranslateX()+400, square.getTranslateY()+400));
 		}
 	}
 	
@@ -133,14 +131,6 @@ public class OthelloBoard extends Application {
 			
 		}
 
-	}
-	
-	private Text createSquareLabel(String coord, double x, double y) {
-		Text label = new Text(coord);
-		label.setFont(labelsFont);
-		label.setTranslateX(x);
-		label.setTranslateY(y);
-		return label;
 	}
 	
 	public void setJeu(Jeu jeu) {
