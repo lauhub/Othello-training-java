@@ -185,45 +185,20 @@ public class OthelloBoard extends Application {
 			.filter((d)->myDiscs.containsKey(d))
 			.forEach((coord) -> myDiscs.get(coord).setDiscToBeTurned(inc.valeur()));
 			
-			/*
-			// Instead of stream, we can also do this
-			for(Case c : discsToTurn) {
-				String coord = c.getEmplacement();
-				if(myDiscs.containsKey(coord)) {
-					myDiscs.get(coord).setDiscToBeTurned(delay);
-					delay += 0.05;
-				}
-				else {
-					throw new IllegalStateException("Cannot turn a disc that is not displayed :" + c.getEmplacement());
-				}
-			}
-			*/
-			// Et une fois cela fait, on met à jour les cases jouables
-			for (String coord : mySquares.keySet()) {
-				setSquareVisible(mySquares.get(coord), false);
-			}
+			System.out.println("///////////////");
+			mySquares.keySet().stream().forEach((coord) -> setSquareVisible(mySquares.get(coord), false));
+			System.out.println("///////////////-");
 			
 			discsToTurn.stream().map(c -> c.getEmplacement())
 			.filter((d)->myDiscs.containsKey(d)).forEach((coord) -> myDiscs.get(coord).runItNow());
-			/*
-			// Instead of stream, we can also do this
-			for(Case c : discsToTurn) {
-				String coord = c.getEmplacement();
-				if(myDiscs.containsKey(coord)) {
-					myDiscs.get(coord).runItNow();
-				}
-			}
-			*/
 			System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
 			System.out.println(jeu);
 			System.out.println("============="+jeu.getProchainJoueur()+"================");
 		}
 		if(e.hasProperty(GameEvent.PropKeys.NEXT_PLAYER)) {
 			Couleur nextPlayer = (Couleur) e.getProperty(GameEvent.PropKeys.NEXT_PLAYER);
-			// Affiche les cases jouables
-			for(Case squareModel: jeu.getCasesJouables(nextPlayer)) {
-				setSquareVisible(mySquares.get(squareModel.getEmplacement()), true);
-			}
+			jeu.getCasesJouables(nextPlayer).stream()
+			.forEach((c) -> setSquareVisible(mySquares.get(c.getEmplacement()), true));
 			statusBar.setPlayer(nextPlayer);
 		}
 	}
