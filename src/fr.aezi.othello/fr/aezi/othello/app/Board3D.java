@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
+import javafx.scene.shape.Shape3D;
 import javafx.scene.transform.Rotate;
 
 public class Board3D extends Group{
@@ -16,7 +17,7 @@ public class Board3D extends Group{
 	double boardHeight = 800;
 	private static final double colorStrength = 0.2;
 
-	public static final Color PLAYABLE_COLOR = new Color(colorStrength+0.2, colorStrength, colorStrength, 0.01);
+	public static final Color PLAYABLE_COLOR = new Color(colorStrength+0.2, colorStrength, colorStrength, 0.0001);
 	public static final Color NON_PLAYABLE_COLOR = new Color(colorStrength, colorStrength, colorStrength, 0.00);
 
 	public Board3D(double width, double height) {
@@ -68,15 +69,18 @@ public class Board3D extends Group{
 		lineBox.setTranslateZ(-0.5);
 		this.getChildren().add(lineBox);
 	}
-	public Box createSquare(double x, double y) {
-		Box box = new Box(boardWidth / 8 - 4, boardHeight / 8 -4 , 2);
+	public Shape3D createSquare(double x, double y) {
+		//Box box = new Box(boardWidth / 8 - 4, boardHeight / 8 -4 , 2);
+		Cylinder box = new Cylinder(boardWidth / 16 - 4, 4);
+		box.setRotationAxis(Rotate.X_AXIS);
+		box.setRotate(90);
 		PhongMaterial material = new PhongMaterial();
 		material.setDiffuseColor(PLAYABLE_COLOR);
 		box.setMaterial(material);
 		box.setTranslateX(x - 400);
 		box.setTranslateY(y - 400);
 		this.getChildren().add(box);
-		box.setTranslateZ(-0.001);
+		box.setTranslateZ(-0.03);
 		box.setAccessibleHelp("playable");
 
 		javafx.event.EventHandler<MouseEvent> infoHandler = (e)-> {

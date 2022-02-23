@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
@@ -36,7 +37,7 @@ public class OthelloBoard extends Application {
 	private Damier damier = new Damier();
 	private Jeu jeu = null;
 	private Map<String, Disc> myDiscs = new HashMap<>();
-	private Map<String, Box> mySquares = new HashMap<>();
+	private Map<String, Shape3D> mySquares = new HashMap<>();
 	private Board3D othellier ;
 	private Group labels ;
 	private Font labelsFont = new Font(30);
@@ -74,6 +75,10 @@ public class OthelloBoard extends Application {
 		othellier.setTranslateX(WIDTH / 2);
 		othellier.setTranslateY(HEIGHT / 2);
 		
+		statusBar.setTranslateX(400);
+		statusBar.setTranslateY(900);
+
+		
 		racine.getChildren().add(othellier);
 		racine.getChildren().add(statusBar);
 
@@ -95,11 +100,10 @@ public class OthelloBoard extends Application {
 		lightGroup.getChildren().add(light);
 		racine.getChildren().add(lightGroup);
 		lightGroup.setTranslateZ(-1100);
-		lightGroup.setTranslateY(-900);
-		//light.setRotate(45);
-
+		lightGroup.setTranslateY(500);
+		
 		labels = new Group();
-		labels.setTranslateZ(-2);
+		labels.setTranslateZ(-1.01);
 		racine.getChildren().add(labels);
 		addLabels();
 		
@@ -152,7 +156,7 @@ public class OthelloBoard extends Application {
 		jeu.addGameListener(this::gameModified);
 	}
 	
-	private void setSquareVisible(Box square, boolean b) {
+	private void setSquareVisible(Shape3D square, boolean b) {
 		PhongMaterial material = (PhongMaterial)square.getMaterial();
 		if(b) {
 			square.setAccessibleHelp("playable");
@@ -239,7 +243,7 @@ public class OthelloBoard extends Application {
 	
 	private Node addPlayableSquare(String coord) {
 		Point2D location = damier.getCoord(coord, WIDTH, HEIGHT);
-		Box square = othellier.createSquare(location.getX(), location.getY());
+		Shape3D square = othellier.createSquare(location.getX(), location.getY());
 		square.setAccessibleText(coord);
 		setSquareVisible(square, false);
 		mySquares.put(coord, square);
