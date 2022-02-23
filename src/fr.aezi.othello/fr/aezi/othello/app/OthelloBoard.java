@@ -247,7 +247,11 @@ public class OthelloBoard extends Application {
 		square.setAccessibleText(coord);
 		setSquareVisible(square, false);
 		mySquares.put(coord, square);
-		System.out.println("addPlayableSquare("+ coord+ " "+ location);
+		
+		
+		square.addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->{
+			statusBar.setInformation(coord + " is " + square.getAccessibleHelp());
+		});
 		return square;
 	}
 }

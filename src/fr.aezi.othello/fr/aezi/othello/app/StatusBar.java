@@ -18,6 +18,7 @@ public class StatusBar extends Group {
 	
 	private Text nextPlayerText ;
 	private Text supplementaryInformationText ;
+	
 	StatusBar(){
 		colors.put(Couleur.NOIR, Color.BLACK);
 		colors.put(Couleur.BLANC, Color.WHITE);
@@ -57,6 +58,8 @@ public class StatusBar extends Group {
 			nextPlayerText.setText("White's turn");
 		}
 	}
-	
+	public void setInformation(String text) {
+		supplementaryInformationText.setText(text);
+	}
 
 }
