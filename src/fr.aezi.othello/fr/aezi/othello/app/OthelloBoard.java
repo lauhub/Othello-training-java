@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
@@ -152,13 +153,7 @@ public class OthelloBoard extends Application {
 			setSquareVisible(mySquares.get(caseJouable.getEmplacement()), true);
 		}
 		statusBar.setPlayer(jeu.getProchainJoueur());
-		//jeu.addGameListener(this::gameModified);
-		jeu.addGameListener(new GameListener() {
-			@Override
-			public void handle(GameEvent e) {
-				gameModified(e);
-			}
-		});
+		jeu.addGameListener(this::gameModified);
 	}
 	
 	private void setSquareVisible(Box square, boolean b) {
@@ -184,7 +179,18 @@ public class OthelloBoard extends Application {
 			
 			@SuppressWarnings("unchecked")
 			Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.PropKeys.DISCS_TO_TURN);
-			double delay = 0.0;
+			
+			class DelayManager {
+				double delai = 0.0;
+				double valeur() { delai += 0.05 ; return delai; }
+			};
+			DelayManager inc = new DelayManager();
+			discsToTurn.stream().map(c -> c.getEmplacement())
+			.filter((d)->myDiscs.containsKey(d))
+			.forEach((coord) -> myDiscs.get(coord).setDiscToBeTurned(inc.valeur()));
+			
+			/*
+			// Instead of stream, we can also do this
 			for(Case c : discsToTurn) {
 				String coord = c.getEmplacement();
 				if(myDiscs.containsKey(coord)) {
@@ -195,20 +201,23 @@ public class OthelloBoard extends Application {
 					throw new IllegalStateException("Cannot turn a disc that is not displayed :" + c.getEmplacement());
 				}
 			}
+			*/
 			// Et une fois cela fait, on met à jour les cases jouables
 			for (String coord : mySquares.keySet()) {
 				setSquareVisible(mySquares.get(coord), false);
 			}
 			
+			discsToTurn.stream().map(c -> c.getEmplacement())
+			.filter((d)->myDiscs.containsKey(d)).forEach((coord) -> myDiscs.get(coord).runItNow());
 			/*
-			 * TODO: montrer comment éviter cette redondance de code... (visiteur ?)
-			 */
+			// Instead of stream, we can also do this
 			for(Case c : discsToTurn) {
 				String coord = c.getEmplacement();
 				if(myDiscs.containsKey(coord)) {
 					myDiscs.get(coord).runItNow();
 				}
 			}
+			*/
 			System.out.println("========= Case Jouée: " + playedSquare.getEmplacement()+ "========");
 			System.out.println(jeu);
 			System.out.println("============="+jeu.getProchainJoueur()+"================");
@@ -244,30 +253,7 @@ public class OthelloBoard extends Application {
 		}
 	}
 	
-	public List<String> putDiscsForTurn() {
-		List<String> discsToTurn = new ArrayList<>();
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "F6");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "G7");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H8");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H7");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H6");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H5");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H4");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H3");
-		addDiscToTurn(discsToTurn, Couleur.BLANC, "H2");
-		return discsToTurn;
-	}
-	
-	private void addDiscToTurn(List<String> list, Couleur color, String coord) {
-		Disc disc = addDisc(color, coord);
-		list.add(coord);
-		disc.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)-> {
-			if(e.getButton() == MouseButton.PRIMARY) {
-				turnDiscs(list);
-			}
-		});
-	}
-	
+
 	public Disc addDisc(Couleur color, String coord) {
 		Disc disc = new Disc(DISC_DIAMETER, DISC_THICKNESS, color.equals(Couleur.BLANC));
 		
@@ -288,26 +274,5 @@ public class OthelloBoard extends Application {
 		mySquares.put(coord, square);
 		System.out.println("addPlayableSquare("+ coord+ " "+ location);
 		return square;
-	}
-	
-
-	/**
-	 * Turns the discs from the given coordinates
-	 * @param coords a list of coordinates
-	 */
-	public void turnDiscs(List<String> coords) {
-		double delay = 0.0;
-		for(String coord : coords) {
-			if(myDiscs.containsKey(coord)) {
-				myDiscs.get(coord).setDiscToBeTurned(delay);
-				delay += 0.05;
-			}
-		}
-		
-		for(String coord : coords) {
-			if(myDiscs.containsKey(coord)) {
-				myDiscs.get(coord).runItNow();
-			}
-		}
 	}
 }

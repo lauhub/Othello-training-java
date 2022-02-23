@@ -81,12 +81,15 @@ public class Disc extends Group{
 	}
 	private Tuple<Timeline> animationToRun ;
 	public void setDiscToBeTurned(double delay) {
+		System.out.println("delay: "+delay);
 		whiteUp = !whiteUp;
 		animationToRun = runDiscRotation(getRotationAngle());
 		
 		animationToRun.first.setDelay(Duration.seconds(delay));
 		animationToRun.second.setDelay(Duration.seconds(delay + 0.1));
 
+		System.out.println(animationToRun.first.getDelay());
+		System.out.println(animationToRun.second.getDelay());
 	}
 	
 	public void runItNow() {
@@ -103,6 +106,9 @@ public class Disc extends Group{
 		myTls.first.play();
 		myTls.second.play();
 	}
+	
+	private static final double TL_FALL= 4.0;
+	private static final double TL_LIFT= 1.0;
 
 	private Tuple<Timeline> runDiscRotation(double newAngle) {
 		setRotationAxis(new Point3D(1, 1, 0));
@@ -111,15 +117,15 @@ public class Disc extends Group{
 		KeyValue minusTranslate = new KeyValue(translateZProperty(), zPos, Interpolator.EASE_IN);
 		KeyValue kvAxis = new KeyValue(rotationAxisProperty(), new Point3D(1, 0, 0));
 		Timeline tl = new Timeline();
-		tl.setRate(1.0);
+		tl.setRate(TL_LIFT);
 		tl.getKeyFrames().add(new KeyFrame(Duration.seconds(0.3), plusTranslate));
 
 		KeyValue kvValue = new KeyValue(rotateProperty(), newAngle);
 		Timeline tlTurn = new Timeline();
-		tlTurn.setRate(1.0);
+		tlTurn.setRate(TL_LIFT);
 		tlTurn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), kvValue, kvAxis));
 		Timeline tlFall = new Timeline();
-		tlFall.setRate(4.0);
+		tlFall.setRate(TL_FALL);
 		tlFall.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), minusTranslate));
 
 		tlTurn.setDelay(Duration.seconds(0.1));
