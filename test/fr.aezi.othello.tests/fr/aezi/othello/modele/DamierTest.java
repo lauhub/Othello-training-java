@@ -1,14 +1,9 @@
-package fr.aezi.othello.tests;
+package fr.aezi.othello.modele;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Set;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import fr.aezi.othello.modele.Case;
-import fr.aezi.othello.modele.Damier;
 
 public class DamierTest {
 	protected Damier damier ;

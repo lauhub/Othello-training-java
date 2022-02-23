@@ -1,17 +1,13 @@
 package fr.aezi.othello.app;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
 import fr.aezi.othello.modele.Damier;
 import fr.aezi.othello.modele.GameEvent;
-import fr.aezi.othello.modele.GameListener;
 import fr.aezi.othello.modele.Jeu;
 import javafx.application.Application;
 import javafx.geometry.Point2D;

@@ -3,7 +3,6 @@ package fr.aezi.othello;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;

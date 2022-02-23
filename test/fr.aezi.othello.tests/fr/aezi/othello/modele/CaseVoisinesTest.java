@@ -1,14 +1,9 @@
-package fr.aezi.othello.tests;
+package fr.aezi.othello.modele;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import fr.aezi.othello.modele.Case;
-import fr.aezi.othello.modele.Damier;
-import fr.aezi.othello.modele.Direction;
-import fr.aezi.othello.modele.Jeu;
 
 public class CaseVoisinesTest {
 	protected Jeu jeu;
