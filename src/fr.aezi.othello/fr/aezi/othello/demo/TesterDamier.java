@@ -1,4 +1,4 @@
-package fr.aezi.othello.tests;
+package fr.aezi.othello.demo;
 
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
