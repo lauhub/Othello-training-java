@@ -19,6 +19,12 @@ public class Disc extends Group{
 	private double zPos ;
 	private boolean whiteUp = false;
 
+	private Cylinder marker ;
+	private PhongMaterial markerMaterial ;
+	private static final Color COLOR_MARKED = new Color(1.0, 0.5, 0.5, 0.8);
+	private static final Color COLOR_NOT_MARKED = new Color(1.0, 0.5, 0.5, 0.0);
+	private static final Color COLOR_TRACE = new Color(0.5, 0.5, 0.5, 0.01);
+	
 	public Disc(double diameter, double thickness, boolean white) {
 		zPos = -thickness;
 		Cylinder faceNoire = new Cylinder(diameter / 2, thickness / 2);
@@ -58,6 +64,34 @@ public class Disc extends Group{
         };
 		
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+		
+		marker = new Cylinder(diameter / 5, thickness *1.2);
+		markerMaterial = new PhongMaterial(COLOR_NOT_MARKED);
+		marker.setMaterial(markerMaterial);
+		marker.setRotationAxis(Rotate.X_AXIS);
+		marker.setTranslateZ( thickness * 0.2) ;
+		marker.setRotate(90);
+		this.getChildren().add(marker);
+		
+	}
+	
+	public void setState(DiscState state) {
+		switch (state) {
+		case PLACED: {
+			markerMaterial.setDiffuseColor(COLOR_NOT_MARKED);
+			break;
+		}
+		case LAST_PLAYED: {
+			markerMaterial.setDiffuseColor(COLOR_MARKED);
+			break;
+		}
+		case TURNED: {
+			markerMaterial.setDiffuseColor(COLOR_TRACE);
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + state);
+		}
 	}
 	
 	public Disc(double diameter, double thickness, double x, double y, boolean white) {

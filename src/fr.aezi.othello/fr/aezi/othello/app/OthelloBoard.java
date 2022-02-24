@@ -20,7 +20,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -42,6 +41,7 @@ public class OthelloBoard extends Application {
 	private Group labels ;
 	private Font labelsFont = new Font(30);
 	private StatusBar statusBar = new StatusBar();
+	private Disc lastPlayedDisc = null;
 
 	
 	public static void main(String[] args) {
@@ -100,7 +100,7 @@ public class OthelloBoard extends Application {
 		lightGroup.getChildren().add(light);
 		racine.getChildren().add(lightGroup);
 		lightGroup.setTranslateZ(-1100);
-		lightGroup.setTranslateY(500);
+		lightGroup.setTranslateY(900);
 		
 		labels = new Group();
 		labels.setTranslateZ(-1.01);
@@ -165,7 +165,13 @@ public class OthelloBoard extends Application {
 		if(e.hasProperty(GameEvent.PropKeys.DISCS_TO_TURN)) {
 			Case playedSquare = (Case)e.getSource();
 			Couleur playedColor = (Couleur)e.getProperty(GameEvent.PropKeys.PLAYED_COLOR);
-			addDisc(playedColor, playedSquare.getEmplacement());
+			Disc addedDisc = addDisc(playedColor, playedSquare.getEmplacement());
+			if(lastPlayedDisc != null) {
+				lastPlayedDisc.setState(DiscState.PLACED);
+			}
+			addedDisc.setState(DiscState.LAST_PLAYED);
+			lastPlayedDisc = addedDisc;
+			
 			
 			@SuppressWarnings("unchecked")
 			Set<Case> discsToTurn = (Set<Case>) e.getProperty(GameEvent.PropKeys.DISCS_TO_TURN);
