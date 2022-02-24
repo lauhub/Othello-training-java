@@ -4,6 +4,7 @@ import static fr.aezi.othello.modele.Couleur.BLANC;
 import static fr.aezi.othello.modele.Couleur.NOIR;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +39,15 @@ public class Jeu {
 		casesOccupees.add(c);
 		
 	}
+	
+	public int getColorScore(Couleur color) {
+		return casesOccupees.stream()
+				.map((c)->getPion(c))
+				.filter((p)-> p != null && p.getCouleur() == color)
+				.mapToInt((p)->1)
+				.sum();
+	}
+	
 	
 	public void jouer(Case c, Couleur couleur) {
 		// La case est-elle jouable ?

@@ -20,7 +20,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -41,13 +40,14 @@ public class OthelloBoard extends Application {
 	private Board3D othellier ;
 	private Group labels ;
 	private Font labelsFont = new Font(30);
-	private StatusBar statusBar = new StatusBar();
+	private StatusBar statusBar = new StatusBar(400, 100, 20);
+	private StatusBar whiteScore = new StatusBar(80, 80, 20);
+	private StatusBar blackScore = new StatusBar(80, 80, 20);
 	private Disc lastPlayedDisc = null;
 
 	
 	public static void main(String[] args) {
 		launch(args);
-		
 	}
 	
 	@Override
@@ -76,15 +76,24 @@ public class OthelloBoard extends Application {
 		othellier.setTranslateX(WIDTH / 2);
 		othellier.setTranslateY(HEIGHT / 2);
 		
-		statusBar.setTranslateX(400);
+		statusBar.setTranslateX(200);
 		statusBar.setTranslateY(900);
 
+		blackScore.setTranslateX(WIDTH - 80);
+		whiteScore.setTranslateX(WIDTH + 10);
+		blackScore.setTranslateY(HEIGHT + 90);
+		whiteScore.setTranslateY(HEIGHT + 90);
+		whiteScore.setPlayer(Couleur.BLANC);
+		whiteScore.setMainText("2");
+		blackScore.setMainText("2");
+		whiteScore.setInformation("");
+		blackScore.setInformation("");
 		
 		racine.getChildren().add(othellier);
+		racine.getChildren().add(blackScore);
+		racine.getChildren().add(whiteScore);
 		racine.getChildren().add(statusBar);
 
-		stage.setScene(scene);
-		stage.show();
 		
 		PerspectiveCamera camera = new PerspectiveCamera();
 		camera.setTranslateY(00);
@@ -112,6 +121,8 @@ public class OthelloBoard extends Application {
 			Node square = addPlayableSquare(coord);
 			square.addEventHandler(MouseEvent.MOUSE_CLICKED, this::squareClicked);
 		}
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 	private void addLabels() {
@@ -203,6 +214,8 @@ public class OthelloBoard extends Application {
 			.forEach((c) -> setSquareVisible(mySquares.get(c.getEmplacement()), true));
 			statusBar.setPlayer(nextPlayer);
 		}
+		whiteScore.setMainText(Integer.toString(jeu.getColorScore(Couleur.BLANC)));
+		blackScore.setMainText(Integer.toString(jeu.getColorScore(Couleur.NOIR)));
 	}
 	
 	private void squareClicked(MouseEvent e) {

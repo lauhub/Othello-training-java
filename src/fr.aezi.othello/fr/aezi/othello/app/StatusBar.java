@@ -11,6 +11,8 @@ import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 
 public class StatusBar extends Group {
+	private double width, height, thickness;
+	
 	
 	private Box colorBox ;
 	private Map<Couleur, Color> colors = new TreeMap<>();
@@ -19,27 +21,30 @@ public class StatusBar extends Group {
 	private Text nextPlayerText ;
 	private Text supplementaryInformationText ;
 	
-	StatusBar(){
+	StatusBar(double width, double height, double thickness){
 		colors.put(Couleur.NOIR, Color.BLACK);
 		colors.put(Couleur.BLANC, Color.WHITE);
+		this.width = width;
+		this.height = height;
+		this.thickness = thickness;
 		init();
 	}
 	
 
 	private void init() {
-		colorBox = new Box(400,100,50);
+		colorBox = new Box(width,height,thickness);
 		colorBox.setMaterial(barMaterial);
 		getChildren().add(colorBox);
 		
 		nextPlayerText = new Text("Noir doit jouer");
 		getChildren().add(nextPlayerText);
-		nextPlayerText.setTranslateZ(-52.0);
-		nextPlayerText.setTranslateX(-180.0);
+		nextPlayerText.setTranslateZ(-thickness - 2.0);
+		nextPlayerText.setTranslateX(-0.45 * width);
 		
 		supplementaryInformationText = new Text("Thank you for playing this demo game !");
 		getChildren().add(supplementaryInformationText);
-		supplementaryInformationText.setTranslateZ(-52.0);
-		supplementaryInformationText.setTranslateX(-180.0);
+		supplementaryInformationText.setTranslateZ(-thickness - 2.0);
+		supplementaryInformationText.setTranslateX(-0.45 * width);
 		supplementaryInformationText.setTranslateY(25.0);
 
 		setPlayer(Couleur.NOIR);
@@ -57,6 +62,9 @@ public class StatusBar extends Group {
 			supplementaryInformationText.setStroke(Color.BLACK);
 			nextPlayerText.setText("White's turn");
 		}
+	}
+	public void setMainText(String text) {
+		nextPlayerText.setText(text);
 	}
 	public void setInformation(String text) {
 		supplementaryInformationText.setText(text);
