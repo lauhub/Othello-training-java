@@ -4,6 +4,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
@@ -16,6 +17,15 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Disc extends Group{
+	class Tuple<T> {
+		Tuple(T first, T second ){
+			this.first = first;
+			this.second = second;
+		}
+		T first ;
+		T second ;
+	}
+
 	private double zPos ;
 	private boolean whiteUp = false;
 
@@ -117,7 +127,7 @@ public class Disc extends Group{
 	public void setDiscToBeTurned(double delay) {
 		System.out.println("delay: "+delay);
 		whiteUp = !whiteUp;
-		animationToRun = runDiscRotation(getRotationAngle());
+		animationToRun = setupDiscRotation(getRotationAngle(), (e) -> setState(DiscState.TURNED));
 		
 		animationToRun.first.setDelay(Duration.seconds(delay));
 		animationToRun.second.setDelay(Duration.seconds(delay + 0.1));
@@ -136,7 +146,7 @@ public class Disc extends Group{
 	public void turnDisc() {
 		whiteUp = !whiteUp;
 		
-		Tuple<Timeline> myTls = runDiscRotation(getRotationAngle());
+		Tuple<Timeline> myTls = setupDiscRotation(getRotationAngle());
 		myTls.first.play();
 		myTls.second.play();
 	}
@@ -144,7 +154,7 @@ public class Disc extends Group{
 	private static final double TL_FALL= 4.0;
 	private static final double TL_LIFT= 1.0;
 
-	private Tuple<Timeline> runDiscRotation(double newAngle) {
+	private Tuple<Timeline> setupDiscRotation(double newAngle, EventHandler<ActionEvent> afterTurnHandler) {
 		setRotationAxis(new Point3D(1, 1, 0));
 
 		KeyValue plusTranslate = new KeyValue(translateZProperty(), -50, Interpolator.EASE_OUT);
@@ -163,17 +173,13 @@ public class Disc extends Group{
 		tlFall.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), minusTranslate));
 
 		tlTurn.setDelay(Duration.seconds(0.1));
-		tl.setOnFinished((event)->{
-			tlFall.play();
-		});
+		tl.setOnFinished((event) -> tlFall.play());
+		if(afterTurnHandler != null) {
+			tlFall.setOnFinished(afterTurnHandler);
+		}
 		return new Tuple<Timeline>(tl, tlTurn);
 	}
-	class Tuple<T> {
-		Tuple(T first, T second ){
-			this.first = first;
-			this.second = second;
-		}
-		T first ;
-		T second ;
+	private Tuple<Timeline> setupDiscRotation(double newAngle) {
+		return setupDiscRotation(newAngle, null);
 	}
 }

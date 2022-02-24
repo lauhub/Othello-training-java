@@ -163,6 +163,9 @@ public class OthelloBoard extends Application {
 	private void gameModified(GameEvent e) {
 		//Game was modified
 		if(e.hasProperty(GameEvent.PropKeys.DISCS_TO_TURN)) {
+			//Resets all discs' state
+			myDiscs.values().stream().forEach((d)->d.setState(DiscState.PLACED));
+			
 			Case playedSquare = (Case)e.getSource();
 			Couleur playedColor = (Couleur)e.getProperty(GameEvent.PropKeys.PLAYED_COLOR);
 			Disc addedDisc = addDisc(playedColor, playedSquare.getEmplacement());
@@ -185,9 +188,7 @@ public class OthelloBoard extends Application {
 			.filter((d)->myDiscs.containsKey(d))
 			.forEach((coord) -> myDiscs.get(coord).setDiscToBeTurned(inc.valeur()));
 			
-			System.out.println("///////////////");
 			mySquares.keySet().stream().forEach((coord) -> setSquareVisible(mySquares.get(coord), false));
-			System.out.println("///////////////-");
 			
 			discsToTurn.stream().map(c -> c.getEmplacement())
 			.filter((d)->myDiscs.containsKey(d)).forEach((coord) -> myDiscs.get(coord).runItNow());
