@@ -20,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Shape3D;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -248,6 +249,16 @@ public class OthelloBoard extends Application {
 		
 		square.addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->{
 			statusBar.setInformation(coord + " is " + square.getAccessibleHelp());
+			Case place = damier.getCoord(coord);
+			jeu.retournementsPossibles(place, jeu.getProchainJoueur()).stream().forEach((c)-> {
+				myDiscs.get(c.getEmplacement()).setState(DiscState.TO_BE_TURNED);
+			});
+		});
+		square.addEventHandler(MouseEvent.MOUSE_EXITED, (e)->{
+			Case place = damier.getCoord(coord);
+			jeu.retournementsPossibles(place, jeu.getProchainJoueur()).stream().forEach((c)-> {
+				myDiscs.get(c.getEmplacement()).restoreState();
+			});
 		});
 		return square;
 	}

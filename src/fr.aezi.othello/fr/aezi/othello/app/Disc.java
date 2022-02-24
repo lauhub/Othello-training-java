@@ -31,6 +31,8 @@ public class Disc extends Group{
 
 	private Cylinder marker ;
 	private PhongMaterial markerMaterial ;
+	PhongMaterial whiteMaterial;
+	PhongMaterial blackMaterial;
 	private static final Color COLOR_MARKED = new Color(1.0, 0.5, 0.5, 0.8);
 	private static final Color COLOR_NOT_MARKED = new Color(1.0, 0.5, 0.5, 0.0);
 	private static final Color COLOR_TRACE = new Color(0.5, 0.5, 0.5, 0.01);
@@ -39,19 +41,19 @@ public class Disc extends Group{
 		zPos = -thickness;
 		Cylinder faceNoire = new Cylinder(diameter / 2, thickness / 2);
 		
-		PhongMaterial material = new PhongMaterial();
-		material.setSpecularColor(Color.DARKBLUE);
-		material.setDiffuseColor(Color.BLACK);
-		faceNoire.setMaterial(material);
+		blackMaterial = new PhongMaterial();
+		blackMaterial.setSpecularColor(Color.DARKBLUE);
+		blackMaterial.setDiffuseColor(Color.BLACK);
+		faceNoire.setMaterial(blackMaterial);
 		faceNoire.setRotationAxis(Rotate.X_AXIS);
 		faceNoire.setRotate(90);
 		faceNoire.setAccessibleText("FACE NOIRE");
 		
 		Cylinder faceBlanche = new Cylinder(diameter / 2, thickness / 2);
-		material = new PhongMaterial();
-		material.setDiffuseColor(Color.WHITE);
-		material.setSpecularColor(Color.WHITESMOKE);
-		faceBlanche.setMaterial(material);
+		whiteMaterial = new PhongMaterial();
+		whiteMaterial.setDiffuseColor(Color.WHITE);
+		whiteMaterial.setSpecularColor(Color.WHITESMOKE);
+		faceBlanche.setMaterial(whiteMaterial);
 		faceBlanche.setRotationAxis(Rotate.X_AXIS);
 		faceBlanche.setRotate(90);
 		faceBlanche.setAccessibleText("FACE BLANCHE");
@@ -85,18 +87,39 @@ public class Disc extends Group{
 		
 	}
 	
+	DiscState previousState = DiscState.PLACED;
+	DiscState currentState = DiscState.PLACED;
+	public void restoreState() {
+		if(previousState != null) {
+			setState(previousState);
+		}
+	}
+	
 	public void setState(DiscState state) {
+		previousState = currentState;
+		currentState = state;
 		switch (state) {
 		case PLACED: {
 			markerMaterial.setDiffuseColor(COLOR_NOT_MARKED);
+			blackMaterial.setDiffuseColor(Color.BLACK);
+			whiteMaterial.setDiffuseColor(Color.WHITE);
 			break;
 		}
 		case LAST_PLAYED: {
 			markerMaterial.setDiffuseColor(COLOR_MARKED);
+			blackMaterial.setDiffuseColor(Color.BLACK);
+			whiteMaterial.setDiffuseColor(Color.WHITE);
 			break;
 		}
 		case TURNED: {
 			markerMaterial.setDiffuseColor(COLOR_TRACE);
+			blackMaterial.setDiffuseColor(Color.BLACK);
+			whiteMaterial.setDiffuseColor(Color.WHITE);
+			break;
+		}
+		case TO_BE_TURNED: {
+			blackMaterial.setDiffuseColor(Color.DARKBLUE);
+			whiteMaterial.setDiffuseColor(Color.LIGHTBLUE);
 			break;
 		}
 		default:

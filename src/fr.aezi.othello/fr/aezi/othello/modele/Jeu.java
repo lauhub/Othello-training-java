@@ -58,18 +58,6 @@ public class Jeu {
 		
 		for(Direction d: c.getDirVoisins()) {
 			casesARetourner.addAll(retournementsPossibles(c, d, couleur));
-			
-			/*
-			Couleur coulVoisin = getPion(v) != null?getPion(v).couleur:null;
-			if(coulVoisin != couleur) {
-				// C'est potentiellement une case à retourner
-				// Je dois donc aller "regarder" dans cette direction
-				// Pour voir si on rencontre un pion
-				// de la couleur jouée
-				
-				
-			}
-			*/
 		}
 		for (Case case1 : casesARetourner) {
 			getPion(case1).setCouleur(couleur);
@@ -83,7 +71,7 @@ public class Jeu {
 		//TODO: We should test here if the next player can play !!!
 		changerProchainJoueur();
 	}
-
+	
 	private void ajouterPion(String coord, Couleur couleur) {
 		ajouterPion( damier.getCoord(coord), couleur );
 	}
@@ -117,7 +105,7 @@ public class Jeu {
 	 * @param couleur la couleur vers laquelle retourner. Les cases à retourner sont donc de la couleur opposée
 	 * @return
 	 */
-	protected Set<Case> retournementsPossibles(Case c, Direction d, Couleur couleur){
+	public Set<Case> retournementsPossibles(Case c, Direction d, Couleur couleur){
 		Set<Case> casesARetourner = new TreeSet<>();
 		
 		if(c.hasNext(d) && !peutEtrePris(c.getVoisin(d), couleur, d)) {
@@ -141,6 +129,15 @@ public class Jeu {
 		}
 		return casesARetourner;
 	}
+	public Set<Case> retournementsPossibles(Case c, Couleur couleur){
+		Set<Case> casesARetourner = new TreeSet<>();
+		for(Direction d: c.getDirVoisins()) {
+			casesARetourner.addAll(retournementsPossibles(c, d, couleur));
+		}
+		return casesARetourner;
+	}
+	
+
 	
 	public Collection<Case> getCasesOccupees() {
 		return casesOccupees;
