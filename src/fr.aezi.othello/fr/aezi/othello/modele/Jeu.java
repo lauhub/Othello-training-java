@@ -98,6 +98,22 @@ public class Jeu {
 		}
 		else {
 			properties.put(GameEvent.PropKeys.PLAYER_MUST_PASS, prochaineCouleur);
+			// We should check here if the game is over
+			if(getCasesJouables(prochainJoueur).size() == 0) {
+				// Game over !
+				// Who won ?
+				int whiteScore = getColorScore(Couleur.BLANC);
+				int blackScore = getColorScore(Couleur.NOIR);
+				if(whiteScore < blackScore) {
+					properties.put(GameEvent.PropKeys.GAME_OVER, Couleur.NOIR);
+				}
+				else if (whiteScore > blackScore) {
+					properties.put(GameEvent.PropKeys.GAME_OVER, Couleur.BLANC);
+				}
+				else {
+					properties.put(GameEvent.PropKeys.GAME_OVER, "DRAWN");
+				}
+			}
 		}
 		properties.put(GameEvent.PropKeys.NEXT_PLAYER, prochainJoueur);
 		GameEvent e = new GameEvent(this, properties);

@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class GameEvent {
 	public enum PropKeys {
-		DISCS_TO_TURN, PLAYED_COLOR, NEXT_PLAYER, PLAYER_MUST_PASS;
+		DISCS_TO_TURN, PLAYED_COLOR, NEXT_PLAYER, PLAYER_MUST_PASS, GAME_OVER;
 		
 	}
 	

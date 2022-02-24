@@ -3,6 +3,8 @@ package fr.aezi.othello.app;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.aezi.othello.modele.Case;
 import fr.aezi.othello.modele.Couleur;
@@ -43,6 +45,7 @@ public class OthelloBoard extends Application {
 	private StatusBar statusBar = new StatusBar(400, 100, 20);
 	private StatusBar whiteScore = new StatusBar(80, 80, 20);
 	private StatusBar blackScore = new StatusBar(80, 80, 20);
+	private StatusBar messagePane = new StatusBar(400, 100, 20);
 	private Disc lastPlayedDisc = null;
 
 	
@@ -78,6 +81,21 @@ public class OthelloBoard extends Application {
 		
 		statusBar.setTranslateX(200);
 		statusBar.setTranslateY(900);
+		
+		messagePane.setRotationAxis(Rotate.X_AXIS);
+		messagePane.setRotate(45);
+		messagePane.setTranslateZ(-100);
+		messagePane.setTranslateX(WIDTH / 2);
+		messagePane.setTranslateY(HEIGHT);
+		messagePane.setPlayer(Couleur.BLANC);
+		messagePane.setInformation("");
+		messagePane.setMainText("Hello !");
+		messagePane.addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->messagePane.setVisible(false));
+		
+		whiteScore.setRotationAxis(Rotate.X_AXIS);
+		blackScore.setRotationAxis(Rotate.X_AXIS);
+		whiteScore.setRotate(45);
+		blackScore.setRotate(45);
 
 		blackScore.setTranslateX(WIDTH - 80);
 		whiteScore.setTranslateX(WIDTH + 10);
@@ -112,6 +130,12 @@ public class OthelloBoard extends Application {
 		lightGroup.setTranslateZ(-1100);
 		lightGroup.setTranslateY(900);
 		
+		light = new PointLight();
+		light.setColor(Color.WHITE);
+		light.setTranslateX(WIDTH * 2);
+		light.setTranslateY(HEIGHT * 2);
+		racine.getChildren().add(light);
+		
 		labels = new Group();
 		labels.setTranslateZ(-1.01);
 		racine.getChildren().add(labels);
@@ -121,6 +145,8 @@ public class OthelloBoard extends Application {
 			Node square = addPlayableSquare(coord);
 			square.addEventHandler(MouseEvent.MOUSE_CLICKED, this::squareClicked);
 		}
+		
+		racine.getChildren().add(messagePane);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -213,6 +239,29 @@ public class OthelloBoard extends Application {
 			jeu.getCasesJouables(nextPlayer).stream()
 			.forEach((c) -> setSquareVisible(mySquares.get(c.getEmplacement()), true));
 			statusBar.setPlayer(nextPlayer);
+		}
+		if(e.hasProperty(GameEvent.PropKeys.PLAYER_MUST_PASS)) {
+			Couleur whoPasses = (Couleur) e.getProperty(GameEvent.PropKeys.PLAYER_MUST_PASS);
+			messagePane.setMainText(whoPasses + " must pass ! " + whoPasses.getOpposant() + "'s turn");
+			messagePane.setVisible(true);
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					messagePane.setVisible(false);
+				}
+			}, 5000);
+		}
+		if(e.hasProperty(GameEvent.PropKeys.GAME_OVER)) {
+			
+			if(e.getProperty(GameEvent.PropKeys.GAME_OVER) instanceof Couleur) {
+				messagePane.setMainText(e.getProperty(GameEvent.PropKeys.GAME_OVER) + " wins !!!");
+			}
+			else {
+				messagePane.setMainText(e.getProperty(GameEvent.PropKeys.GAME_OVER).toString());
+			}
+			messagePane.setVisible(true);
 		}
 		whiteScore.setMainText(Integer.toString(jeu.getColorScore(Couleur.BLANC)));
 		blackScore.setMainText(Integer.toString(jeu.getColorScore(Couleur.NOIR)));
