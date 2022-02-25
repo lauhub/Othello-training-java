@@ -12,6 +12,7 @@ import fr.aezi.othello.modele.Damier;
 import fr.aezi.othello.modele.GameEvent;
 import fr.aezi.othello.modele.Jeu;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -66,6 +67,9 @@ public class OthelloBoard extends Application {
 		control.setX(stage.getX() + stage.getWidth());
 		control.setY(stage.getY());
 		control.show();
+		
+		stage.setOnCloseRequest((e)->Platform.exit());
+		control.setOnCloseRequest((e)->Platform.exit());
 	}
 	private void initializeBoard(Stage stage) throws Exception {
 		stage.setTitle("Othello - v0");
